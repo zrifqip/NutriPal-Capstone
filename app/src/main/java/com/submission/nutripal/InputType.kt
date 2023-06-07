@@ -32,5 +32,12 @@ sealed class InputType(
         ),
         visualTransformation = PasswordVisualTransformation()
     )
+    object Username : InputType(
+        label = "Username",
+        //null icon
+        icon = Icons.Default.Person,
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        visualTransformation = VisualTransformation.None
+    )
 }
 

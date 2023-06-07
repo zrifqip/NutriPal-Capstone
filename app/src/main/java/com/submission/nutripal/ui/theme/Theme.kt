@@ -13,6 +13,7 @@ private val DarkColorPalette = darkColors(
 )
 
 private val LightColorPalette = lightColors(
+    onBackground = Green200,
     primary = Green200,
     primaryVariant = Green500,
     secondary = Green700
@@ -29,11 +30,7 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun NutripalTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
+    val colors = LightColorPalette
 
     MaterialTheme(
         colors = colors,

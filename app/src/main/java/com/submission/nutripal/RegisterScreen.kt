@@ -30,7 +30,7 @@ import com.submission.nutripal.ui.theme.Shapes
 
 
 @Composable
-fun LoginScreen() {
+fun RegisterScreen() {
     val context = LocalContext.current
     val passwordFocusRequest = remember { FocusRequester() }
     val FocusManager = LocalFocusManager.current
@@ -64,7 +64,7 @@ fun LoginScreen() {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    "Sign In",
+                    "Register",
                     fontSize = 20.sp,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
@@ -79,6 +79,17 @@ fun LoginScreen() {
                             passwordFocusRequest.requestFocus()
                         })
                 )
+                Text(
+                    "Username",
+                    modifier = Modifier.align(Alignment.Start)
+                )
+                TextInput(
+                    inputType = InputType.Username, keyboardActions = KeyboardActions(
+                        onDone = {
+                            FocusManager.clearFocus()
+                            passwordFocusRequest.requestFocus()
+                        })
+                )
 
                 Text(
                     "Password",
@@ -86,7 +97,15 @@ fun LoginScreen() {
                 )
                 TextInput(InputType.Password, keyboardActions = KeyboardActions(onDone = {
                     FocusManager.clearFocus()
-                    context.doLogin()
+                    context.doRegister()
+                }), focusRequester = passwordFocusRequest)
+                Text(
+                    "Reconfirm Password",
+                    modifier = Modifier.align(Alignment.Start)
+                )
+                TextInput(InputType.Password, keyboardActions = KeyboardActions(onDone = {
+                    FocusManager.clearFocus()
+                    context.doRegister()
                 }), focusRequester = passwordFocusRequest)
                 Divider(
                     color = Color.White.copy(alpha = 0.3f),
@@ -94,42 +113,36 @@ fun LoginScreen() {
                     modifier = Modifier.padding(top = 18.dp)
                 )
                 Button(onClick = {
-                    context.doLogin()
+                    context.doRegister()
                 }, modifier = Modifier.widthIn(min = 200.dp, max = 400.dp),
                     colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id =R.color.green_700))) {
-                    Text("SIGN IN", Modifier.padding(vertical = 8.dp))
+                    Text("SIGN UP", Modifier.padding(vertical = 8.dp))
                 }
                 Divider(
                     color = Color.White.copy(alpha = 0.3f),
                     thickness = 1.dp,
                     modifier = Modifier.padding(top = 48.dp)
                 )
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Don't have an account?", color = colorResource(id =R.color.green_700 ),
-                        fontWeight = FontWeight.Medium
-                    )
-                    TextButton(onClick = {}) {
-                        Text("SIGN UP",color = colorResource(id =R.color.green_900 ), fontWeight = FontWeight.Bold)
-                    }
-                }
             }
         }
 
 
     }
 }
-private fun Context.doLogin() {
+private fun Context.doRegister() {
     Toast.makeText(
         this,
         "Something went wrong, try again later!",
         Toast.LENGTH_SHORT
     ).show()
 }
-@Preview(showBackground = true)
+@Preview
 @Composable
-fun LoginScreenPreview() {
-    LoginScreen()
+fun PreviewRegisterScreen() {
+    RegisterScreen()
 }
+
+
 
 
 
