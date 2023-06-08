@@ -23,7 +23,7 @@ import com.submission.nutripal.R
 
 
 @Composable
-private fun StartSurvey(
+fun StartSurvey(
     title: String,
     description: String,
     modifier: Modifier = Modifier
@@ -51,9 +51,9 @@ private fun StartSurvey(
 @Preview(showBackground = true)
 @Composable
 fun PreviewStartQuestion() {
-    StartSurvey(
-        title = "Survey Profile",
+    StartSurvey(title = "Survey Profile",
         description = "Kami akan mengkalkulasi kebutuhan sehari hari tubuh anda agar mendapat makanan yang cocok bagi tubuh anda. Maka dari itu, kami memerlukan anda untuk mengisi survey mengenai kondisi tubuh anda."
+
     )
 }
 

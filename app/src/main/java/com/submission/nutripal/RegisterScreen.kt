@@ -30,7 +30,9 @@ import com.submission.nutripal.ui.theme.Shapes
 
 
 @Composable
-fun RegisterScreen() {
+fun RegisterScreen(
+    onRegister: () -> Unit,
+) {
     val context = LocalContext.current
     val passwordFocusRequest = remember { FocusRequester() }
     val FocusManager = LocalFocusManager.current
@@ -113,7 +115,7 @@ fun RegisterScreen() {
                     modifier = Modifier.padding(top = 18.dp)
                 )
                 Button(onClick = {
-                    context.doRegister()
+                    onRegister()
                 }, modifier = Modifier.widthIn(min = 200.dp, max = 400.dp),
                     colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id =R.color.green_700))) {
                     Text("SIGN UP", Modifier.padding(vertical = 8.dp))
@@ -130,16 +132,14 @@ fun RegisterScreen() {
     }
 }
 private fun Context.doRegister() {
-    Toast.makeText(
-        this,
-        "Something went wrong, try again later!",
-        Toast.LENGTH_SHORT
-    ).show()
+
 }
 @Preview
 @Composable
 fun PreviewRegisterScreen() {
-    RegisterScreen()
+    RegisterScreen(
+        onRegister = {}
+    )
 }
 
 

@@ -31,4 +31,9 @@
     <string name="smoking_question">Apakah kamu seorang perokok?</string>
     <string name="alcohol_question">Apakah kamu meminum alkohol?</string>
     <string name="food_preference_question">Apa Preferensi makananmu?</string>
+    <string name="activity_4">Sangat aktif</string>
+    <string name="previous">Seblumnya</string>
+    <string name="next">Lanjut</string>
+    <string name="done">Selesai</string>
+    <string name="question_count">\\u00A0of %d</string>
 </resources>

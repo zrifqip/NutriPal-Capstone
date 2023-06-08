@@ -16,8 +16,6 @@
 
 package com.submission.nutripal.ui.survey
 
-import android.net.Uri
-import android.preference.Preference
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -29,9 +27,10 @@ class SurveyViewModel(
 ) : ViewModel() {
 
     private val questionOrder: List<SurveyQuestion> = listOf(
+        SurveyQuestion.STARTER,
         SurveyQuestion.GENDER,
-        SurveyQuestion.BIRTHDATE,
         SurveyQuestion.WEIGHT,
+        SurveyQuestion.BIRTHDATE,
         SurveyQuestion.HEIGHT,
         SurveyQuestion.ACTIVITY,
         SurveyQuestion.SMOKE,
@@ -49,11 +48,11 @@ class SurveyViewModel(
     private val _birthdateResponse = mutableStateOf<Long?>(null)
     val birthdateResponse: Long?
         get() = _birthdateResponse.value
-    private val _weightResponse = mutableStateOf<Int?>(null)
-    val weightResponse: Int?
+    private val _weightResponse = mutableStateOf("")
+    val weightResponse: String
         get() = _weightResponse.value
-    private val _heightResponse = mutableStateOf<Int?>(null)
-    val heightResponse: Int?
+    private val _heightResponse = mutableStateOf("")
+    val heightResponse: String
         get() = _heightResponse.value
     private val _activityResponse = mutableStateOf<Int?>(null)
     val activityResponse: Int?
@@ -65,8 +64,7 @@ class SurveyViewModel(
     val drinkResponse: Int?
         get() = _drinkResponse.value
     private val preference = mutableStateListOf<Int?>()
-    val preferenceResponse: List<Int?>
-        get() = preference
+
 
 
     // ----- Survey status exposed as State -----
@@ -111,13 +109,52 @@ class SurveyViewModel(
     }
 
 
+    fun onGenderResponse(gender: Gender) {
+        _genderResponse.value = gender
+        _isNextEnabled.value = getIsNextEnabled()
+    }
+    fun StartResponse(){
+        _isNextEnabled.value = getIsNextEnabled()
+    }
 
-    fun onTakeawayResponse(timestamp: Long) {
+
+    fun onBirthdateResponse(birthdate: Long) {
+        _birthdateResponse.value = birthdate
+        _isNextEnabled.value = getIsNextEnabled()
+    }
+    fun onWeightResponse(weight: String) {
+        _weightResponse.value = weight
+        _isNextEnabled.value = getIsNextEnabled()
+    }
+    fun onHeightResponse(height: String) {
+        _heightResponse.value = height
+        _isNextEnabled.value = getIsNextEnabled()
+    }
+    fun onActivityResponse(activity: Int) {
+        _activityResponse.value = activity
+        _isNextEnabled.value = getIsNextEnabled()
+    }
+    fun onSmokeResponse(smoke: Int) {
+        _smokeResponse.value = smoke
+        _isNextEnabled.value = getIsNextEnabled()
+    }
+    fun onDrinkResponse(drink: Int) {
+        _drinkResponse.value = drink
+        _isNextEnabled.value = getIsNextEnabled()
     }
 
 
     private fun getIsNextEnabled(): Boolean {
-        return questionIndex < questionOrder.size - 1
+        return when(questionOrder[questionIndex]) {
+            SurveyQuestion.STARTER -> true
+            SurveyQuestion.GENDER -> genderResponse != null
+            SurveyQuestion.BIRTHDATE -> birthdateResponse != null
+            SurveyQuestion.WEIGHT -> weightResponse != ""
+            SurveyQuestion.HEIGHT -> heightResponse != ""
+            SurveyQuestion.ACTIVITY -> activityResponse != null
+            SurveyQuestion.SMOKE -> smokeResponse != null
+            SurveyQuestion.DRINK -> drinkResponse != null
+        }
     }
 
     private fun createSurveyScreenData(): SurveyScreenData {
@@ -143,6 +180,7 @@ class SurveyViewModelFactory(
 }
 
 enum class SurveyQuestion {
+    STARTER,
     GENDER,
     WEIGHT,
     HEIGHT,
@@ -150,8 +188,6 @@ enum class SurveyQuestion {
     SMOKE,
     DRINK,
     ACTIVITY,
-    FOOD_PREFERENCE
-
 }
 
 data class SurveyScreenData(

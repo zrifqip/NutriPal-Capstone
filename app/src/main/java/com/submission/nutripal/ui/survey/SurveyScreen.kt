@@ -16,6 +16,7 @@
 
 package com.submission.nutripal.ui.survey
 
+import AlcoholQuestion
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -45,16 +46,149 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 import com.submission.nutripal.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SurveyScreen(
-    surveyScreenData: SurveyScreenData
-)
-{
+fun SurveyQuestionsScreen(
+    surveyScreenData: SurveyScreenData,
+    isNextEnabled: Boolean,
+    onPreviousPressed: () -> Unit,
+    onNextPressed: () -> Unit,
+    content: @Composable (PaddingValues) -> Unit,
+) {
 
+    Surface(modifier = Modifier) {
+        Scaffold(
+            topBar = {
+                SurveyTopAppBar(
+                    questionIndex = surveyScreenData.questionIndex,
+                    totalQuestionsCount = surveyScreenData.questionCount,
+                )
+            },
+            content = content,
+            bottomBar = {
+                SurveyBottomBar(
+                    shouldShowPreviousButton = surveyScreenData.shouldShowPreviousButton,
+                    shouldShowDoneButton = surveyScreenData.shouldShowDoneButton,
+                    isNextButtonEnabled = isNextEnabled,
+                    onPreviousPressed = onPreviousPressed,
+                    onNextPressed = onNextPressed,
+                )
+            }
+        )
+    }
 }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SurveyTopAppBar(
+    questionIndex: Int,
+    totalQuestionsCount: Int,
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
 
+        CenterAlignedTopAppBar(
+            title = {
+                TopAppBarTitle(
+                    questionIndex = questionIndex,
+                    totalQuestionsCount = totalQuestionsCount,
+                )
+            }
+        )
 
+        val animatedProgress by animateFloatAsState(
+            targetValue = (questionIndex + 1) / totalQuestionsCount.toFloat(),
+            animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
+        )
+        LinearProgressIndicator(
+            progress = animatedProgress,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
+            trackColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+        )
+    }
+}
+@Composable
+private fun TopAppBarTitle(
+    questionIndex: Int,
+    totalQuestionsCount: Int,
+    modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier) {
+        Text(
+            text = (questionIndex + 1).toString(),
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+        )
+        Text(
+            text = stringResource(R.string.question_count, totalQuestionsCount),
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+        )
+    }
+}
+@Composable
+fun SurveyBottomBar(
+    shouldShowPreviousButton: Boolean,
+    shouldShowDoneButton: Boolean,
+    isNextButtonEnabled: Boolean,
+    onPreviousPressed: () -> Unit,
+    onNextPressed: () -> Unit,
+) {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shadowElevation = 7.dp,
+    ) {
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 20.dp)
+        ) {
+            if (shouldShowPreviousButton) {
+                OutlinedButton(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(48.dp),
+                    onClick = onPreviousPressed
+                ) {
+                    Text(text = stringResource(id = R.string.previous))
+                }
+                Spacer(modifier = Modifier.width(16.dp))
+            }
+                Button(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(48.dp),
+                    onClick = onNextPressed,
+                    enabled = isNextButtonEnabled,
+                ) {
+                    Text(text = stringResource(id = R.string.next))
+
+            }
+        }
+    }
+}
+@Preview
+@Composable
+fun SurveyTopBarPreview() {
+    SurveyTopAppBar(
+        questionIndex = 1,
+        totalQuestionsCount = 10,
+    )
+}
+@Preview
+@Composable
+fun SurveyBottomBarPreview() {
+    SurveyBottomBar(
+        shouldShowPreviousButton = true,
+        shouldShowDoneButton = false,
+        isNextButtonEnabled = true,
+        onPreviousPressed = {},
+        onNextPressed = {},
+    )
+}

@@ -108,7 +108,7 @@ fun RadioButtonWithImageRow(
     text: String,
     @DrawableRes imageResourceId: Int,
     selected: Boolean,
-    onOptionSelected: () -> Unit,
+    onOptionSelected: () -> Unit     ,
     modifier: Modifier = Modifier,
 ) {
     Surface(

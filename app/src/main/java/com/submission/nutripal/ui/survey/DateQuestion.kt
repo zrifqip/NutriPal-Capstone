@@ -40,7 +40,6 @@ import com.submission.nutripal.util.getDefaultDateInMillis
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
-
 @Composable
 fun DateQuestion(
     @StringRes titleResourceId: Int,
@@ -64,7 +63,7 @@ fun DateQuestion(
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.surface,
                 contentColor = MaterialTheme.colorScheme.onSurface
-                    .copy(alpha = 1.37f),
+                    .copy(alpha = 0.87f),
             ),
             shape = MaterialTheme.shapes.small,
             modifier = Modifier
@@ -89,20 +88,14 @@ fun DateQuestion(
     }
 }
 
-@Preview(
-    name = "Date Question",
-    showBackground = true,
-)
+@Preview(name = "Date Question", showBackground = true,)
 @Composable
 fun DateQuestionPreview() {
-    NutripalTheme() {
-        Surface {
-            DateQuestion(
-                titleResourceId = R.string.birth_date,
-                directionsResourceId = R.string.select_date,
-                dateInMillis = 1672560000000, // 2023-01-01
-                onClick = {},
-            )
-        }
-    }
+    DateQuestion(
+        titleResourceId = R.string.birth_date,
+        directionsResourceId = R.string.select_date,
+        dateInMillis = 1672560000000, // 2023-01-01
+        onClick = {},
+    )
+
 }

@@ -30,7 +30,10 @@ import com.submission.nutripal.ui.theme.Shapes
 
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    onLogin: () -> Unit,
+    onRegister: () -> Unit,
+) {
     val context = LocalContext.current
     val passwordFocusRequest = remember { FocusRequester() }
     val FocusManager = LocalFocusManager.current
@@ -93,9 +96,7 @@ fun LoginScreen() {
                     thickness = 1.dp,
                     modifier = Modifier.padding(top = 18.dp)
                 )
-                Button(onClick = {
-                    context.doLogin()
-                }, modifier = Modifier.widthIn(min = 200.dp, max = 400.dp),
+                Button(onClick = onLogin, modifier = Modifier.widthIn(min = 200.dp, max = 400.dp),
                     colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id =R.color.green_700))) {
                     Text("SIGN IN", Modifier.padding(vertical = 8.dp))
                 }
@@ -108,7 +109,7 @@ fun LoginScreen() {
                     Text("Don't have an account?", color = colorResource(id =R.color.green_700 ),
                         fontWeight = FontWeight.Medium
                     )
-                    TextButton(onClick = {}) {
+                    TextButton(onClick = onRegister) {
                         Text("SIGN UP",color = colorResource(id =R.color.green_900 ), fontWeight = FontWeight.Bold)
                     }
                 }
@@ -128,7 +129,7 @@ private fun Context.doLogin() {
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen()
+
 }
 
 
