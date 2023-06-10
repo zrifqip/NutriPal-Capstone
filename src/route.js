@@ -2,38 +2,50 @@ const db  = require('./dbConfig');
 const express = require('express');
 const router = express.Router();
 
-
-const { signupValidation, loginValidation } = require('./validation');
-const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 router.post('/signup', (req, res,) => {
-    db.query(`SELECT * FROM users WHERE LOWER(email) = LOWER(${db.escape(req.body.email)});`, (err, result) => {
-        if (req.body.confirmationPassword !== req.body.password) {
-            return res.status(409).send({msg: 'Passwords do not match!'});
-        } else {
-            // Confirmation password matches the intended password
-            bcrypt.hash(req.body.password, 10, (err, hash) => {
-                if (err) {
-                    return res.status(500).send({msg: err});
-                } else {
-                    // Password has been hashed
-                    db.query(`INSERT INTO users (name, email, password) VALUES ('${req.body.name}', ${db.escape(req.body.email)}, ${db.escape(hash)});`,(err, result) => {
-                        if (err) {
-                            throw err;
-                            return res.status(400).send({msg: err});
-                        }
-                        return res.status(201).json({error: false, message: "User Created"});
-                    });
-                }
+    const query1 = "SELECT * FROM user WHERE LOWER(email) = LOWER(?)"
+    db.query(query1, [req.body.email], (err, result) => {
+        if (err) {
+            return res.status(400).send({ msg: err });
+        }
+
+        if (result.length) {
+            return res.status(409).send({
+                msg: 'This email is already in use!'
             });
+        } else {
+            //Check if passwords match
+            if (req.body.confirmationPassword !== req.body.password) {
+                return res.status(409).send({ msg: 'Passwords do not match!' });
+            } else {
+                console.log("Checkpoint CEK PASSWORD SAMA GA");
+                // Confirmation password matches the intended password
+                bcrypt.hash(req.body.password, 10, (err, hash) => {
+                    if (err) {
+                        return res.status(500).send({ msg: err });
+                    } else {
+                        console.log("Checkpoint HASH OK");
+                        // Password has been hashed
+                        const query2 = "INSERT INTO user (name, email, password) values (?, ?, ?)"
+                        db.query(query2, [(req.body.name), (req.body.email), hash], (err, result) => {
+                            if (err) {
+                                //throw err;
+                                return res.status(400).send({ msg: err });
+                            }
+                            return res.status(201).json({ error: false, message: "User Created" });
+                        });
+                    }
+                });
+            }
         }
     });
 });
 
 router.post('/login', (req, res) => {
-    db.query(`SELECT * FROM users WHERE email = ${db.escape(req.body.email)};`,(err, result) => {
+    db.query(`SELECT * FROM user WHERE email = ${db.escape(req.body.email)};`,(err, result) => {
         // User does not exists (email is not registered yet)
         if (err) {
             throw err;
@@ -49,7 +61,7 @@ router.post('/login', (req, res) => {
           return res.status(401).send({msg: 'Incorrect username or password!'});
         }
         const token = jwt.sign({id:result[0].id_user},'my-32-character-ultra-secure-and-ultra-long-secret',{ expiresIn: '365d' });
-        db.query(`UPDATE users SET last_login = now(), fill_survey = true WHERE id_user = '${result[0].id_user}';`);
+        db.query(`UPDATE user SET last_login = now(), fill_survey = true WHERE id_user = '${result[0].id_user}';`);
         return res.status(200).send({error: false, msg: 'success', token, loginResult: result[0]});
       });
     });
