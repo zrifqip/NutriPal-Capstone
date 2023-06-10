@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 //TO DO: Replace it with your current database
 const db = mysql.createConnection({
-  host: '34.128.110.173',
+  host: 'public hostname',
   user: 'root',     
   password: 'root',      
   database: 'capstone',
