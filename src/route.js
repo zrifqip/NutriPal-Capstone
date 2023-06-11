@@ -1,4 +1,4 @@
-const db  = require('./dbConfig');
+const pool  = require('./poolConfig');
 const express = require('express');
 const router = express.Router();
 
@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 
 router.post('/signup', (req, res,) => {
     const query1 = "SELECT * FROM user WHERE LOWER(email) = LOWER(?)"
-    db.query(query1, [req.body.email], (err, result) => {
+    pool.query(query1, [req.body.email], (err, result) => {
         if (err) {
             return res.status(400).send({ msg: err });
         }
@@ -30,7 +30,7 @@ router.post('/signup', (req, res,) => {
                         console.log("Checkpoint HASH OK");
                         // Password has been hashed
                         const query2 = "INSERT INTO user (name, email, password) values (?, ?, ?)"
-                        db.query(query2, [(req.body.name), (req.body.email), hash], (err, result) => {
+                        pool.query(query2, [(req.body.name), (req.body.email), hash], (err, result) => {
                             if (err) {
                                 //throw err;
                                 return res.status(400).send({ msg: err });
@@ -45,7 +45,7 @@ router.post('/signup', (req, res,) => {
 });
 
 router.post('/login', (req, res) => {
-    db.query(`SELECT * FROM user WHERE email = ${db.escape(req.body.email)};`,(err, result) => {
+    pool.query(`SELECT * FROM user WHERE email = ${pool.escape(req.body.email)};`,(err, result) => {
         // User does not exists (email is not registered yet)
         if (err) {
             throw err;
@@ -61,8 +61,19 @@ router.post('/login', (req, res) => {
           return res.status(401).send({msg: 'Incorrect username or password!'});
         }
         const token = jwt.sign({id:result[0].id_user},'my-32-character-ultra-secure-and-ultra-long-secret',{ expiresIn: '365d' });
-        db.query(`UPDATE user SET last_login = now(), fill_survey = true WHERE id_user = '${result[0].id_user}';`);
-        return res.status(200).send({error: false, msg: 'success', token, loginResult: result[0]});
+        pool.query(`UPDATE user SET last_login = now(), fill_survey = true WHERE id_user = '${result[0].id_user}';`);
+        return res.status(200).send({
+            error: false, 
+            msg: 'success', 
+            loginResult: {
+                id_user: result[0].id_user,
+                name: result[0].name,
+                email: result[0].email,
+                survey: result[0].fill_survey,
+                lastLogin: result[0].last_login,
+                token: token
+            }
+        });
       });
     });
 
