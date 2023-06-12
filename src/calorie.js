@@ -15,8 +15,8 @@ function getBMR(weight, height, sex, age) { //weight in kg, height in cm, age in
 }
 
 function getCaloriesIntake(bmr, category, activityFactor) { //
-    categoryValue = ['Underweight', 'Healthy Weight', 'Overweight', 'Obese'];
-    activityValue = ['Sedentary', 'Lightly Active', 'Moderately Active', 'Active', 'Very Active'];
+    const categoryValue = ['Underweight', 'Healthy Weight', 'Overweight', 'Obese'];
+    const activityValue = ['Sedentary', 'Lightly Active', 'Moderately Active', 'Active', 'Very Active'];
     const categoryMatch = categoryValue.some(item => item.toLowerCase() === category.toLowerCase());
     const activityMatch = activityValue.some(item => item.toLowerCase() === activityFactor.toLowerCase());
     if(typeof(bmr) === 'number' && (categoryMatch) && (activityMatch)) {
