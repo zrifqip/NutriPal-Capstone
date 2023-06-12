@@ -1,8 +1,8 @@
 package com.submission.nutripal.ui.survey
 
 import ActivityQuestion
+import AgeQuestion
 import AlcoholQuestion
-import BirthQuestion
 import GenderQuestion
 import HeightQuestion
 import SmokingQuestion
@@ -26,8 +26,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.IntOffset
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.android.material.datepicker.MaterialDatePicker
-
 private const val CONTENT_ANIMATION_DURATION = 300
 
 
@@ -37,6 +35,7 @@ private const val CONTENT_ANIMATION_DURATION = 300
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun SurveyRoute(
+    onSurveyComplete: () -> Unit,
     onNavUp: () -> Unit,
 ) {
     val viewModel: SurveyViewModel = viewModel(
@@ -56,6 +55,7 @@ fun SurveyRoute(
         isNextEnabled = viewModel.isNextEnabled,
         onPreviousPressed = { viewModel.onPreviousPressed() },
         onNextPressed = { viewModel.onNextPressed() },
+        onDonePressed = { viewModel.onDonePressed(onSurveyComplete) },
     ) { paddingValues ->
 
         val modifier = Modifier.padding(paddingValues)
@@ -90,19 +90,11 @@ fun SurveyRoute(
                         onOptionSelected = viewModel::onGenderResponse
                     )
                 }
-                SurveyQuestion.BIRTHDATE -> {
-                    val supportFragmentManager =
-                        LocalContext.current.findActivity().supportFragmentManager
-                    BirthQuestion(
-                        dateInMillis = viewModel.birthdateResponse,
-                        onClick = {
-                            showBirthDatePicker(
-                                date = viewModel.birthdateResponse,
-                                supportFragmentManager = supportFragmentManager,
-                                onDateSelected = viewModel::onBirthdateResponse
-                            )
-                        },
-                        modifier = modifier
+                SurveyQuestion.AGE -> {
+                    AgeQuestion(
+                        modifier = modifier,
+                        fillText = viewModel.ageResponse,
+                        onValueChange = viewModel::onAgeResponse,
                     )
                 }
 
@@ -165,25 +157,4 @@ fun getTransitionDirection(
 
 
 
-private fun showBirthDatePicker(
-    date: Long?,
-    supportFragmentManager: FragmentManager,
-    onDateSelected: (date: Long) -> Unit,
-) {
-    val picker = MaterialDatePicker.Builder.datePicker()
-        .setSelection(date)
-        .build()
-    picker.show(supportFragmentManager, picker.toString())
-    picker.addOnPositiveButtonClickListener {
-        picker.selection?.let {
-            onDateSelected(it)
-        }
-    }
-}
 
-private tailrec fun Context.findActivity(): AppCompatActivity =
-    when (this) {
-        is AppCompatActivity -> this
-        is ContextWrapper -> this.baseContext.findActivity()
-        else -> throw IllegalArgumentException("Could not find activity!")
-    }

@@ -1,10 +1,16 @@
 package com.submission.nutripal
 
+import android.media.Image
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Icon
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -18,7 +24,7 @@ sealed class InputType(
     ) {
     object Email : InputType(
         label = "Email",
-        icon = Icons.Default.Person,
+        icon = Icons.Default.Email,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         visualTransformation = VisualTransformation.None
     )
@@ -39,5 +45,15 @@ sealed class InputType(
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         visualTransformation = VisualTransformation.None
     )
+    object ConfirmationPassword : InputType(
+        label = "Password",
+        icon = Icons.Default.Lock,
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done,
+            keyboardType = KeyboardType.Password
+        ),
+        visualTransformation = PasswordVisualTransformation()
+    )
+
 }
 

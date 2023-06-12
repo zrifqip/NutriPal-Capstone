@@ -1,4 +1,4 @@
-package com.submission.submissionintermediate.data
+package com.submission.nutripal.data
 
 import com.google.gson.annotations.SerializedName
 

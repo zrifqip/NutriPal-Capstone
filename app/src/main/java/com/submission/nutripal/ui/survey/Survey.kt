@@ -2,7 +2,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.submission.nutripal.R
-import com.submission.nutripal.ui.survey.DateQuestion
 import com.submission.nutripal.ui.survey.Gender
 import com.submission.nutripal.ui.survey.MultipleChoiceQuestion
 import com.submission.nutripal.ui.survey.PreviewStartQuestion
@@ -38,18 +37,19 @@ fun GenderQuestion(
     )
 }
 
+
 @Composable
-fun BirthQuestion(
-    dateInMillis: Long?,
-    onClick: () -> Unit,
+fun AgeQuestion(
+    fillText: String,
     modifier: Modifier = Modifier,
-) {
-    DateQuestion(
-        titleResourceId = R.string.birth_date,
-        directionsResourceId = R.string.select_date,
-        dateInMillis = dateInMillis,
-        onClick = onClick,
+    onValueChange: (String) -> Unit,
+){
+    TextInputQuestion(titleResourceId = R.string.birth_Question
+        , directionsResourceId = R.string.age_direction
+        , hintTextId = R.string.Age_Hint
+        , filledText = fillText,
         modifier = modifier,
+        onValueChange = onValueChange,
     )
 }
 @Composable

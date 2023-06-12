@@ -7,6 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,21 +24,21 @@ import com.submission.nutripal.ui.theme.Shapes
 
 @Composable
 fun TextInput(
+    value: MutableState<String>,
+    onValueChange: (String) -> Unit,
     inputType: InputType,
     focusRequester: FocusRequester? = null,
     keyboardActions: KeyboardActions
-) {
-
-    var value by remember { mutableStateOf("") }
+){
 
     TextField(
-        value = value,
-        onValueChange = { value = it },
+        value = value.value,
+        onValueChange = onValueChange,
         modifier = Modifier
             .fillMaxWidth()
             .focusRequester(focusRequester ?: FocusRequester()),
         leadingIcon = { Icon(imageVector = inputType.icon, null) },
-        label = { Text(text = inputType.label) },
+        label = { Text(text = inputType.label, color = colorResource(id =R.color.black )) },
         shape = Shapes.small,
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = colorResource(id = R.color.green_200),

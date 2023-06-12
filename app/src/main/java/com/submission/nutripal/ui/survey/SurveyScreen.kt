@@ -58,6 +58,7 @@ fun SurveyQuestionsScreen(
     isNextEnabled: Boolean,
     onPreviousPressed: () -> Unit,
     onNextPressed: () -> Unit,
+    onDonePressed: () -> Unit,
     content: @Composable (PaddingValues) -> Unit,
 ) {
 
@@ -77,6 +78,7 @@ fun SurveyQuestionsScreen(
                     isNextButtonEnabled = isNextEnabled,
                     onPreviousPressed = onPreviousPressed,
                     onNextPressed = onNextPressed,
+                    onDonePressed = onDonePressed
                 )
             }
         )
@@ -138,6 +140,8 @@ fun SurveyBottomBar(
     isNextButtonEnabled: Boolean,
     onPreviousPressed: () -> Unit,
     onNextPressed: () -> Unit,
+    onDonePressed: () -> Unit
+
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
@@ -160,6 +164,18 @@ fun SurveyBottomBar(
                 }
                 Spacer(modifier = Modifier.width(16.dp))
             }
+
+            if (shouldShowDoneButton) {
+                Button(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(48.dp),
+                    onClick = onDonePressed,
+                    enabled = isNextButtonEnabled,
+                ) {
+                    Text(text = stringResource(id = R.string.done))
+                }
+            } else {
                 Button(
                     modifier = Modifier
                         .weight(1f)
@@ -168,7 +184,7 @@ fun SurveyBottomBar(
                     enabled = isNextButtonEnabled,
                 ) {
                     Text(text = stringResource(id = R.string.next))
-
+                }
             }
         }
     }
@@ -190,5 +206,6 @@ fun SurveyBottomBarPreview() {
         isNextButtonEnabled = true,
         onPreviousPressed = {},
         onNextPressed = {},
+        onDonePressed = {},
     )
 }

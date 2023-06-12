@@ -1,41 +1,73 @@
-package com.submission.nutripal
+package com.submission.nutripal.ui.auth
 
 import android.content.Context
-import android.graphics.drawable.shapes.Shape
-import android.widget.Toast
-import androidx.compose.foundation.Image
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.*
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusOrder
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.submission.nutripal.InputType
+import com.submission.nutripal.R
+import com.submission.nutripal.data.UiState
+import com.submission.nutripal.data.User
 import com.submission.nutripal.ui.TextInput
-import com.submission.nutripal.ui.theme.Shapes
-
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun RegisterScreen(
     onRegister: () -> Unit,
 ) {
-    val context = LocalContext.current
+    val name = remember { mutableStateOf("") }
+    val email = remember { mutableStateOf("") }
+    val password = remember { mutableStateOf("") }
+    val confirmationPassword = remember { mutableStateOf("") }
     val passwordFocusRequest = remember { FocusRequester() }
     val FocusManager = LocalFocusManager.current
+    val registerViewModel: RegisterViewModel = hiltViewModel()
+
+    val emailInputType = InputType.Email
+    val usernameInputType = InputType.Username
+    val passwordInputType = InputType.Password
+    val confirmationPasswordInputType = InputType.ConfirmationPassword
+
+
+
+    val uiState by registerViewModel.uiState.observeAsState(UiState.Idle)
+
+    when (uiState) {
+        is UiState.Idle -> {
+            //do nothing
+        }
+        is UiState.Loading -> {
+            CircularProgressIndicator()
+        }
+        is UiState.Success ->{
+            LaunchedEffect(uiState) {
+                onRegister()
+            }
+        }
+        is UiState.Error -> {
+            Text(text = (uiState as UiState.Error).message)
+        }
+    }
     //add box in center for input text
     Box(
         modifier = Modifier
@@ -75,7 +107,10 @@ fun RegisterScreen(
                     modifier = Modifier.align(Alignment.Start)
                 )
                 TextInput(
-                    inputType = InputType.Email, keyboardActions = KeyboardActions(
+                    value = email,
+                    onValueChange = { newValue -> email.value = newValue },
+                    inputType = emailInputType,
+                    keyboardActions = KeyboardActions(
                         onDone = {
                             FocusManager.clearFocus()
                             passwordFocusRequest.requestFocus()
@@ -86,38 +121,58 @@ fun RegisterScreen(
                     modifier = Modifier.align(Alignment.Start)
                 )
                 TextInput(
-                    inputType = InputType.Username, keyboardActions = KeyboardActions(
+                    value = name,
+                    onValueChange = { newValue -> name.value = newValue },
+                    inputType = usernameInputType,
+                    keyboardActions = KeyboardActions(
                         onDone = {
                             FocusManager.clearFocus()
                             passwordFocusRequest.requestFocus()
                         })
                 )
-
                 Text(
                     "Password",
                     modifier = Modifier.align(Alignment.Start)
                 )
-                TextInput(InputType.Password, keyboardActions = KeyboardActions(onDone = {
-                    FocusManager.clearFocus()
-                    context.doRegister()
-                }), focusRequester = passwordFocusRequest)
+                TextInput(
+                    value = password,
+                    onValueChange = { newValue -> password.value = newValue },
+                    inputType = passwordInputType,
+                    keyboardActions = KeyboardActions(onDone = {
+                        FocusManager.clearFocus()
+                    }),
+                    focusRequester = passwordFocusRequest
+                )
                 Text(
                     "Reconfirm Password",
                     modifier = Modifier.align(Alignment.Start)
                 )
-                TextInput(InputType.Password, keyboardActions = KeyboardActions(onDone = {
-                    FocusManager.clearFocus()
-                    context.doRegister()
-                }), focusRequester = passwordFocusRequest)
+                TextInput(
+                    value = confirmationPassword,
+                    onValueChange = { newValue -> confirmationPassword.value = newValue },
+                    inputType = confirmationPasswordInputType,
+                    keyboardActions = KeyboardActions(onDone = {
+                        FocusManager.clearFocus()
+                    }),
+                    focusRequester = passwordFocusRequest
+                )
                 Divider(
                     color = Color.White.copy(alpha = 0.3f),
                     thickness = 1.dp,
                     modifier = Modifier.padding(top = 18.dp)
                 )
                 Button(onClick = {
-                    onRegister()
+                    val user = User(
+                        name = name.value,
+                        email = email.value,
+                        password = password.value,
+                        confirmationPassword = confirmationPassword.value
+                    )
+                    Log.d("RegisterScreen", user.toString())
+                    registerViewModel.registerUser(user)
+//                    onRegister()
                 }, modifier = Modifier.widthIn(min = 200.dp, max = 400.dp),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id =R.color.green_700))) {
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.green_700))) {
                     Text("SIGN UP", Modifier.padding(vertical = 8.dp))
                 }
                 Divider(
@@ -127,13 +182,12 @@ fun RegisterScreen(
                 )
             }
         }
+        //create user for input
 
 
     }
 }
-private fun Context.doRegister() {
 
-}
 @Preview
 @Composable
 fun PreviewRegisterScreen() {

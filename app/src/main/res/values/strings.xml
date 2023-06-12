@@ -36,4 +36,8 @@
     <string name="next">Lanjut</string>
     <string name="done">Selesai</string>
     <string name="question_count">\\u00A0of %d</string>
+    <string name="birth_Question">Berapa umurmu sekarang?</string>
+    <string name="Age_Hint">Tahun</string>
+    <string name="age_direction">isi umurmu dibawah ini</string>
+    <string name="survey_result">Hasil</string>
 </resources>

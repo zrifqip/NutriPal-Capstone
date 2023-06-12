@@ -30,7 +30,7 @@ class SurveyViewModel(
         SurveyQuestion.STARTER,
         SurveyQuestion.GENDER,
         SurveyQuestion.WEIGHT,
-        SurveyQuestion.BIRTHDATE,
+        SurveyQuestion.AGE,
         SurveyQuestion.HEIGHT,
         SurveyQuestion.ACTIVITY,
         SurveyQuestion.SMOKE,
@@ -45,9 +45,9 @@ class SurveyViewModel(
     val genderResponse: Gender?
         get() = _genderResponse.value
 
-    private val _birthdateResponse = mutableStateOf<Long?>(null)
-    val birthdateResponse: Long?
-        get() = _birthdateResponse.value
+    private val _ageResponse = mutableStateOf("")
+    val ageResponse: String
+        get() = _ageResponse.value
     private val _weightResponse = mutableStateOf("")
     val weightResponse: String
         get() = _weightResponse.value
@@ -63,7 +63,6 @@ class SurveyViewModel(
     private val _drinkResponse = mutableStateOf<Int?>(null)
     val drinkResponse: Int?
         get() = _drinkResponse.value
-    private val preference = mutableStateListOf<Int?>()
 
 
 
@@ -118,10 +117,7 @@ class SurveyViewModel(
     }
 
 
-    fun onBirthdateResponse(birthdate: Long) {
-        _birthdateResponse.value = birthdate
-        _isNextEnabled.value = getIsNextEnabled()
-    }
+
     fun onWeightResponse(weight: String) {
         _weightResponse.value = weight
         _isNextEnabled.value = getIsNextEnabled()
@@ -142,13 +138,17 @@ class SurveyViewModel(
         _drinkResponse.value = drink
         _isNextEnabled.value = getIsNextEnabled()
     }
+    fun onAgeResponse(age: String) {
+        _ageResponse.value = age
+        _isNextEnabled.value = getIsNextEnabled()
+    }
 
 
     private fun getIsNextEnabled(): Boolean {
         return when(questionOrder[questionIndex]) {
             SurveyQuestion.STARTER -> true
             SurveyQuestion.GENDER -> genderResponse != null
-            SurveyQuestion.BIRTHDATE -> birthdateResponse != null
+            SurveyQuestion.AGE -> ageResponse != ""
             SurveyQuestion.WEIGHT -> weightResponse != ""
             SurveyQuestion.HEIGHT -> heightResponse != ""
             SurveyQuestion.ACTIVITY -> activityResponse != null
@@ -182,9 +182,10 @@ class SurveyViewModelFactory(
 enum class SurveyQuestion {
     STARTER,
     GENDER,
+    AGE,
     WEIGHT,
     HEIGHT,
-    BIRTHDATE,
+
     SMOKE,
     DRINK,
     ACTIVITY,
