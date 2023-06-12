@@ -112,7 +112,7 @@ router.put("/survey/:idUser", (req, res) => {
         updateDashboard(idUser);
         return res.status(201).json({
             error: false,
-            message: "Survey and dashboard datas have been updated"
+            message: "Survey and dashboard data have been updated"
         });
     });
 });
