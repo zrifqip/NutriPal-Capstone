@@ -10,19 +10,22 @@ router.get("/", (req, res) => {
 
 // ------------------------------------- DASHBOARD
 //getHasilSurvey atau Dashboard data
-router.get("/dashboard/:idSurvey", (req, res) => {
-    let idSurvey = parseInt(req.params.idSurvey);
+router.get("/dashboard/:idUser", (req, res) => {
+    let idUser = parseInt(req.params.idUser);
 
     //Check invalid parameter or parameter missing
-    if (!idSurvey || isNaN(idSurvey)) {
-        return res.status(400).send({message: "Invalid parameter or parameter missing."});
+    if (!idUser || isNaN(idUser)) {
+        return res.status(400).send({ message: "Invalid parameter or parameter missing." });
     }
 
-    db.query(`SELECT * FROM hasil_survei WHERE id = (${db.escape(idSurvey)});`, (err, row) => {
+    db.query(`SELECT A.id_hasil_survei, A.id_survei, A.bmi_category, A.bmi, A.calorie_target, A.ideal_weight
+    FROM hasil_survei AS A
+    JOIN survei AS B ON A.id_survei = B.id_survei
+    WHERE B.id_user = (${db.escape(idUser)});`, (err, result) => {
         if(err) {
-            res.status(500).send({message: err.sqlMessage})
+            res.status(500).send({message: err.sqlMessage});
         } else {
-            res.json(row)
+            res.status(200).send({error: false, message: 'retrieve data success', surveyResult: result[0]});
         }
     });
 });
