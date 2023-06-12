@@ -1,4 +1,3 @@
-
 function getBMR(weight, height, sex, age) { //weight in kg, height in cm, age in year (float, int, int)
     if(typeof(weight) === 'number' && typeof(height) === 'number' && typeof(age) === 'number' && (sex == 'Male' || sex == 'Female')) {
         let bmr;
@@ -8,7 +7,7 @@ function getBMR(weight, height, sex, age) { //weight in kg, height in cm, age in
                 bmr = 66.5 + (13.75*weight) + (5.003*height) - (6.75*age);
                 break;
             case 'Female':
-                bmr = 655.1 + (9.563*weight) + (1.85*m) - (4.676*age);
+                bmr = 655.1 + (9.563*weight) + (1.85*height) - (4.676*age);
                 break;
           }
         return Math.round(bmr);
@@ -16,41 +15,43 @@ function getBMR(weight, height, sex, age) { //weight in kg, height in cm, age in
 }
 
 function getCaloriesIntake(bmr, category, activityFactor) { //
-    if(typeof(bmr) === 'number' && 
-    (category == 'Underweight' || category == 'Healthy weight' || category == 'Overweight' || category == 'Obese') &&
-    (activityFactor == 'Sedentary' || activityFactor == 'Lightly active' || activityFactor == 'Moderately active' || activityFactor == 'Active') || activityFactor == 'Very active') {
+    categoryValue = ['Underweight', 'Healthy Weight', 'Overweight', 'Obese'];
+    activityValue = ['Sedentary', 'Lightly Active', 'Moderately Active', 'Active', 'Very Active'];
+    const categoryMatch = categoryValue.some(item => item.toLowerCase() === category.toLowerCase());
+    const activityMatch = activityValue.some(item => item.toLowerCase() === activityFactor.toLowerCase());
+    if(typeof(bmr) === 'number' && (categoryMatch) && (activityMatch)) {
         let calorie;
-        switch(activityFactor) {
+        switch(activityFactor.toLowerCase()) {
             //scale factor ref:  https://www.omnicalculator.com/health/bmr-harris-benedict-equation
-            case 'Sedentary':
+            case (activityValue[0].toLowerCase()): //Sedentary
                 calorie = 1.2*bmr;
                 break;
-            case 'Lightly active':
+            case (activityValue[1].toLowerCase()): //Lightly active
                 calorie = 1.375*bmr;
                 break;
-            case 'Moderately active':
+            case (activityValue[2].toLowerCase()): //'Moderately active'
                 calorie = 1.55*bmr;
                 break;
-            case 'Active':
+            case (activityValue[3].toLowerCase()): //'Active':
                 calorie = 1.725*bmr;
                 break;
-            case 'Very active':
+            case (activityValue[4].toLowerCase()): //'Very active':
                 calorie = 1.9*bmr;
                 break;
             }
 
-        switch(category) {
+        switch(category.toLowerCase()) {
             //percentage reference: https://www.calculator.net/calorie-calculator.html
-            case 'Underweight':
+            case (categoryValue[0].toLowerCase()): //'Underweight':
                 calorie = 1.13*calorie; //Mild weight gain: 113% of normal calorie
                 break;
-            case 'Healthy weight': //Maintain weight: 100% of normal calorie
+            case (categoryValue[1].toLowerCase()): //'Healthy weight': 
+                break;  //Maintain weight: 100% of normal calorie
+            case (categoryValue[2].toLowerCase()): //'Overweight':  
+                calorie = 0.87*calorie; //Mild weight loss: 87% of normal calorie
                 break;
-            case 'Overweight':  //Mild weight loss: 87% of normal calorie
-                calorie = 0.87*calorie;
-                break;
-            case 'Obese': //Weight loss: 74% of normal calorie
-                calorie = 0.74*calorie;
+            case (categoryValue[3].toLowerCase()): //'Obese': 
+                calorie = 0.74*calorie; //Weight loss: 74% of normal calorie
                 break;
             }
         return Math.round(calorie);

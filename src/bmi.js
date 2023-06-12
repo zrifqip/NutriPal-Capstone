@@ -3,7 +3,7 @@
 function getIndex(weight, height) { //weight in kg and height in cm)
     if(typeof(weight) === 'number' && typeof(height) === 'number') {
         let idx = ( 10000 * weight) / (height * height);
-        return idx.toFixed(1);
+        return parseFloat(idx.toFixed(1));
     }
 }
 
@@ -24,8 +24,8 @@ function getIdealWeight(height) { //height in cm, BMItarget normally set
     //Peterson Equation (2016) : 2.2 x BMItarget + 3.5 x BMItarget x (Height (m) - 1.5 m)
     //22 is normally set as BMItarget
     if(typeof(height) === 'number') {
-        let idx = 48.4 + (0.77 * (height - 150));
-        return idx.toFixed(1);
+        let ideal = 48.4 + (0.77 * (height - 150));
+        return parseFloat(ideal.toFixed(1));
     }
 }
 
