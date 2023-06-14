@@ -23,9 +23,12 @@ router.get("/dashboard/:idUser", (req, res) => {
     JOIN survei AS B ON A.id_survei = B.id_survei
     WHERE B.id_user = (${db.escape(idUser)});`, (err, result) => {
         if(err) {
-            res.status(500).send({message: err.sqlMessage});
+            return res.status(500).send({message: err.sqlMessage});
+        }
+        if (!result.length) {
+            return res.status(400).send({ message: "No such data exist" });
         } else {
-            res.status(200).send({error: false, message: 'retrieve data success', surveyResult: result[0]});
+            return res.status(200).send({error: false, message: 'Retrieve data success', dashboardResult: result[0]});
         }
     });
 });
@@ -42,8 +45,11 @@ router.get("/survey/:idUser", (req, res) => {
     db.query(`SELECT * FROM survei WHERE id_user = (${db.escape(idUser)});`, (err, result) => {
         if (err) {
             res.status(500).send({ message: err.sqlMessage });
+        }
+        if (!result.length) {
+            return res.status(400).send({ message: "No such data exist" });
         } else {
-            res.json(result);
+            return res.status(200).send({error: false, message: 'Retrieve data success', surveyResult: result[0]});
         }
     });
 });
@@ -51,18 +57,22 @@ router.get("/survey/:idUser", (req, res) => {
 //post data survey dan hasil survey
 router.post("/survey/:idUser", (req, res) => {
     let idUser = parseInt(req.params.idUser);
-    const weight = req.body.weight;
-    const height = req.body.height;
-    const age = req.body.age;
-    const smoking = req.body.smoking;
-    const alcohol = req.body.alcohol;
+    const weight = typeof(req.body.weight) === 'string' ? parseInt(req.body.weight) : req.body.weight;
+    const height = typeof(req.body.height) === 'string' ? parseInt(req.body.height) : req.body.height;
+    const age = typeof(req.body.age) === 'string' ? parseInt(req.body.age) : req.body.age;
+    const smoking = typeof(req.body.smoking) === 'string' ? parseInt(req.body.smoking) : req.body.smoking;
+    const alcohol = typeof(req.body.alcohol) === 'string' ? parseInt(req.body.alcohol) : req.body.alcohol;
     const sex = req.body.sex;
     const activity = req.body.activity;
 
     //Check invalid parameter or parameter missing
-    if (!idUser || isNaN(idUser)) {
-        return res.status(400).send({ message: "Invalid parameter or parameter missing." });
+    if (!idUser || !weight || !height || !age || !sex || !activity  ) {
+        return res.status(400).send({ message: "Parameter missing." });
     }
+    if (isNaN(idUser) || isNaN(weight) || isNaN(height) || isNaN(age) || isNaN(smoking) || isNaN(alcohol)) {
+        return res.status(400).send({ message: "Invalid parameter." });
+    }
+    
     //Check if survey data has already existed
     db.query(`SELECT * FROM survei WHERE id_user = ${db.escape(idUser)};`, (err, result) => {
         if (err) {
@@ -87,19 +97,22 @@ router.post("/survey/:idUser", (req, res) => {
 //update data dan Hasil Survey
 router.put("/survey/:idUser", (req, res) => {
     let idUser = parseInt(req.params.idUser);
-    let empty = (!idUser);
-    const weight = req.body.weight;
-    const height = req.body.height;
-    const age = req.body.age;
-    const smoking = req.body.smoking;
-    const alcohol = req.body.alcohol;
+    const weight = typeof(req.body.weight) === 'string' ? parseInt(req.body.weight) : req.body.weight;
+    const height = typeof(req.body.height) === 'string' ? parseInt(req.body.height) : req.body.height;
+    const age = typeof(req.body.age) === 'string' ? parseInt(req.body.age) : req.body.age;
+    const smoking = typeof(req.body.smoking) === 'string' ? parseInt(req.body.smoking) : req.body.smoking;
+    const alcohol = typeof(req.body.alcohol) === 'string' ? parseInt(req.body.alcohol) : req.body.alcohol;
     const sex = req.body.sex;
     const activity = req.body.activity;
 
-    //Check invalid parameter
-    if (!idUser || isNaN(idUser)) {
-        return res.status(400).send({ message: "Invalid parameter or parameter missing." });
+    //Check invalid parameter or parameter missing
+    if (!idUser || !weight || !height || !age || !sex || !activity  ) {
+        return res.status(400).send({ message: "Parameter missing." });
     }
+    if (isNaN(idUser) || isNaN(weight) || isNaN(height) || isNaN(age) || isNaN(smoking) || isNaN(alcohol)) {
+        return res.status(400).send({ message: "Invalid parameter." });
+    }
+
     //Check if survey data has already existed
     db.query(`SELECT * FROM survei WHERE id_user = ${db.escape(idUser)};`, (err, result) => {
         if (err) {
