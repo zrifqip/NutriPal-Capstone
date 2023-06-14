@@ -1,4 +1,4 @@
-const pool  = require('./poolConfig');
+const db  = require('./dbConfig');
 const express = require('express');
 const router = express.Router();
 
@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 
 router.post('/signup', (req, res,) => {
     const query1 = "SELECT * FROM user WHERE LOWER(email) = LOWER(?)"
-    pool.query(query1, [req.body.email], (err, result) => {
+    db.query(query1, [req.body.email], (err, result) => {
         if (err) {
             return res.status(400).send({ msg: err });
         }
@@ -30,7 +30,7 @@ router.post('/signup', (req, res,) => {
                         console.log("Checkpoint HASH OK");
                         // Password has been hashed
                         const query2 = "INSERT INTO user (name, email, password) values (?, ?, ?)"
-                        pool.query(query2, [(req.body.name), (req.body.email), hash], (err, result) => {
+                        db.query(query2, [(req.body.name), (req.body.email), hash], (err, result) => {
                             if (err) {
                                 //throw err;
                                 return res.status(400).send({ msg: err });
@@ -45,7 +45,7 @@ router.post('/signup', (req, res,) => {
 });
 
 router.post('/login', (req, res) => {
-    pool.query(`SELECT * FROM user WHERE email = ${pool.escape(req.body.email)};`,(err, result) => {
+    db.query(`SELECT * FROM user WHERE email = ${db.escape(req.body.email)};`,(err, result) => {
         // User does not exists (email is not registered yet)
         if (err) {
             throw err;
@@ -61,7 +61,8 @@ router.post('/login', (req, res) => {
           return res.status(401).send({msg: 'Incorrect username or password!'});
         }
         const token = jwt.sign({id:result[0].id_user},'my-32-character-ultra-secure-and-ultra-long-secret',{ expiresIn: '365d' });
-        pool.query(`UPDATE user SET last_login = now(), fill_survey = true WHERE id_user = '${result[0].id_user}';`);
+        db.query(`UPDATE user SET last_login = now(), fill_survey = true WHERE id_user = '${result[0].id_user}';`);
+        //return res.status(200).send({error: false, msg: 'success', token, loginResult: result[0]});
         return res.status(200).send({
             error: false, 
             msg: 'success', 
