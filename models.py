@@ -7,6 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1-A8zl6UanuTKzpOH6KXmeQCsCdSZo7a8
 """
 
+import pickle
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
@@ -37,7 +38,7 @@ lunch_predictions = lunch_classifier.predict(X_test)
 dinner_predictions = dinner_classifier.predict(X_test)
 
 # Save models using pickle
-m'''models = {
+'''models = {
     'breakfast': breakfast_classifier,
     'lunch': lunch_classifier,
     'dinner': dinner_classifier,

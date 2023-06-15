@@ -4,25 +4,11 @@ from function import *
 
 app = Flask(__name__)
 
-def authorization(func):
-    def wrapper(*args, **kwargs):
-        token = request.headers.get('Authorization')
-        if not token:
-            return jsonify("AUTHORIZATION ERROR!!!"), 401
-
-        try:
-            payload = jwt.decode(token, 'my-32-character-ultra-secure-and-ultra-long-secret')
-            return func(*args, **kwargs)
-        except jwt.DecodeError:
-            return jsonify("AUTHORIZATION FAILED!!!"), 401
-    return wrapper
-
 @app.route('/', methods=['GET'])
 def home():
     return "Successful GET Response"
 
-@app.route('api/predict',methods=['POST'])
-@authorization
+@app.route('/api/predict',methods=['POST'])
 def predict():
     body = request.get_json(force=True)
     
@@ -31,9 +17,9 @@ def predict():
         breakfast_recommendation, lunch_recommendation, dinner_recommendation = generate_meal_recommendation(daily_calorie)
         
         result = {
-        "breakfast": {f"id{i+1}": val for i, val in enumerate(breakfast_recommendation)},
-        "lunch": {f"id{i+1}": val for i, val in enumerate(lunch_recommendation)},
-        "dinner": {f"id{i+1}": val for i, val in enumerate(dinner_recommendation)}
+        "breakfast": {f"id{i+1}": (val+1) for i, val in enumerate(breakfast_recommendation)},
+        "lunch": {f"id{i+1}": (val+1) for i, val in enumerate(lunch_recommendation)},
+        "dinner": {f"id{i+1}": (val+1) for i, val in enumerate(dinner_recommendation)}
         }
         return jsonify(result)
     else:

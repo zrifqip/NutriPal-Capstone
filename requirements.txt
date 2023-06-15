@@ -1,5 +1,5 @@
 flask
 gunicorn
 pandas
-sklearn
+scikit-learn
 PyJWT
