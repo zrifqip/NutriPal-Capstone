@@ -1,0 +1,221 @@
+food_name,food_weight,calories,unit,breakfast,lunch,dinner
+Jagung Rebus,250,90.2,1.0,1,1,1
+Kentang Rebus,200,166.0,2.0,1,1,1
+Ketan Putih,120,217.0,2.75,1,1,0
+Ketupat,160,32.0,0.5,1,1,0
+Lontong,200,38.0,0.5,1,1,1
+Nasi Putih,100,175.0,2.25,1,1,1
+Nasi Putih Kentucky,225,349.0,4.25,1,1,1
+Roti Tawar Serat Tinggi,60,149.0,1.75,1,0,1
+Singkong Rebus,100,146.0,1.75,1,1,0
+Talas Rebus,100,98.0,1.25,1,1,0
+Ubi Rebus,100,125.0,1.5,1,1,0
+Bubur,200,44.0,0.5,1,0,0
+Crakers,50,229.0,2.75,1,1,1
+Makaroni,25,91.0,1.25,1,1,0
+Mie Instant,50,168.0,2.0,0,1,1
+Nasi Tim,100,88.0,1.0,1,1,1
+Nasi Uduk,200,506.0,6.25,1,1,1
+Roti Tawar,50,128.0,1.5,1,0,1
+Bihun Goreng,150,296.0,3.75,1,1,0
+Bubur Ayam,200,165.0,2.0,1,0,0
+Bubur Sum-Sum,100,178.0,2.25,1,0,0
+Kentang Goreng,150,211.0,2.75,1,1,0
+Mie Goreng,200,321.0,4.0,0,1,1
+Nasi Goreng,100,267.0,3.25,1,1,1
+Soun Goreng,100,263.0,3.25,0,1,1
+Spaghetti,300,642.0,8.0,0,1,1
+Tape Singkong,150,260.0,3.25,0,1,1
+Arsik,95,94.05,1.0,0,1,0
+Ayam Bakar Bumbu Kuning,100,129.4,1.5,0,1,1
+Ayam Panggang,100,164.3,3.25,0,1,1
+Daging Panggang,70,150.0,1.75,0,1,1
+Ikan Mas Pepes,200,143.5,1.75,0,1,1
+Sambal Goreng Tempe,50,116.0,1.5,1,1,0
+Telur Asin Rebus,75,138.0,1.75,1,1,1
+Telur Ayam Rebus,60,97.0,1.25,1,1,1
+Udang Rebus,100,91.0,1.25,1,1,0
+Hati Ayam Goreng,50,98.0,1.25,1,1,1
+Ayam Pop,200,265.0,3.25,1,1,1
+Bakso Daging Sapi,100,260.0,3.25,0,1,1
+Empal Daging,100,147.0,1.75,0,1,1
+Ikan Bandeng Goreng,160,180.7,2.25,0,1,1
+Ikan Baronang Goreng,120,107.5,1.25,0,1,1
+Ikan Bawal Goreng,120,113.3,1.5,0,1,1
+Ikan Ekor Goreng,100,107.8,1.25,0,1,1
+Ikan Kembung Goreng,80,87.65,1.0,0,1,1
+Ikan Lele Goreng,60,57.5,0.75,0,1,1
+Ikan Patin Goreng,200,252.7,3.0,0,1,1
+Ikan Selar Goreng,40,63.75,0.75,0,1,1
+Ikan Tenggiri Goreng,60,85.3,1.0,0,1,1
+Ikan Teri Goreng,50,66.0,0.75,0,1,1
+Ikan Tuna Goreng,60,110.0,1.25,0,1,1
+Kerang Rebus,100,59.0,0.75,0,1,1
+Macaroni Schootel,50,177.0,2.25,1,1,0
+Tahu Bacem,100,147.0,1.75,1,1,1
+Telur Mata Sapi,60,40.0,1.75,1,1,1
+Tempe Bacem,50,157.0,2.0,1,1,1
+Tempe Goreng,50,118.0,1.5,0,1,1
+Tenggiri Bumbu Kuning,90,94.4,1.0,0,1,1
+Udang Goreng Besar,80,68.25,3.25,0,1,1
+Abon Sapi,50,158.0,2.0,1,1,1
+Ayam Goreng Kecap,75,358.8,4.5,1,1,1
+Sayap Ayam,50,63.6,0.75,1,1,1
+Daging Balado,50,147.0,1.75,0,1,1
+Dendeng Balado,40,338.0,4.25,0,1,1
+Gulai Ayam,100,165.3,2.0,0,1,1
+Gulai Cumi,100,183.0,2.25,0,1,1
+Gulai Kepala Ikan Kakap,320,218.8,2.75,0,1,1
+Gulai Limpa,60,294.0,3.5,0,1,1
+Gulai Tunjang,80,251.0,3.0,0,1,1
+Ikan Kembung Balado,125,236.7,3.0,0,1,1
+Ikan Teri,50,213.0,2.75,0,1,1
+Kakap Goreng Tepung,80,119.0,1.5,0,1,1
+Kakap Panir,75,220.0,2.75,0,1,1
+Keripik Tempe,25,68.0,0.75,0,1,1
+Daging Cincang Bulat,50,168.0,2.0,1,1,1
+Ayam Kentucky Paha Atas,150,194.5,2.5,1,1,1
+Perkedel Jagung,50,108.0,1.25,1,1,0
+Perkedel Kentang,50,123.0,1.5,1,1,0
+Pu Yung Hai,50,114.0,1.5,1,1,0
+Rendang Daging,75,285.5,3.5,0,1,1
+Sate Ayam,100,466.0,6.0,0,1,1
+Ayam Kentucky Sayap,150,116.0,1.5,1,1,1
+Semur Ayam,50,177.8,2.25,0,1,1
+Sambal Goreng Ati + Kentang,100,127.0,1.5,1,1,0
+Sambal Goreng Tempe Teri,150,276.0,3.5,1,1,0
+Sambal Goreng Ati Sapi,100,200.0,2.5,1,1,0
+Sambal Goreng Udang + Kentang,100,123.0,1.5,1,1,0
+Sop Sapi,260,227.0,2.75,0,1,1
+Tahu Goreng,100,111.0,1.5,1,1,1
+Tahu Isi,150,124.0,1.5,1,1,0
+Tahu Sumedang,100,113.0,1.5,1,1,1
+Telur Dadar,75,188.0,2.25,1,1,1
+Acar Kuning,75,53.0,0.5,1,1,0
+Bening Bayam,50,18.0,0.25,0,1,1
+Cah Labu Siam,100,41.6,0.5,0,1,1
+Sayur Asam,100,88.0,1.0,0,1,1
+Sop Ayam Kombinasi,100,95.0,1.25,0,1,1
+Sop Bayam,50,78.0,1.0,0,1,1
+Sop Kimlo,100,104.0,1.25,0,1,1
+Sop Mutiara Jagung,100,113.0,1.5,0,1,1
+Asop Oyong Misoa,100,106.0,1.25,0,1,1
+Sop Telur Puyuh,100,116.0,1.5,0,1,1
+Sayur Lodeh,100,61.0,0.75,0,1,1
+Cah Jagung Putren,100,59.0,0.75,0,1,1
+Cah Kacang Panjang,100,72.0,1.0,0,1,1
+Sop Oyong Telur Puyuh,100,134.0,1.75,0,1,1
+Setup Kentang Buncis,100,95.0,1.0,0,1,1
+Tumis Buncis,100,52.0,1.5,0,1,1
+Tumis Daun Singkong,120,151.0,1.75,0,1,1
+Tumis Kacang Panjang + Jagung,125,118.0,1.75,0,1,1
+Buntil,100,106.0,1.25,0,1,0
+Gudeg,150,132.0,1.75,1,1,0
+Apel,160,92.0,1.0,1,1,1
+Apel Merah,140,82.0,1.0,1,1,1
+Belimbing,160,80.0,0.75,0,1,0
+Duku,200,81.0,1.0,0,1,0
+Jambu Air,60,35.4,0.5,0,1,0
+Jambu Biji,320,157.0,2.0,0,1,0
+Jeruk Medan,140,46.0,0.5,0,1,0
+Jeruk Pontianak,150,67.0,0.75,0,1,0
+Jeruk Sunkist,200,40.0,0.5,0,1,0
+Mangga Manalagi,100,72.0,1.0,0,1,0
+Nanas,200,104.0,1.25,0,1,1
+Pepaya,100,46.0,0.5,1,1,1
+Pir,200,80.0,1.0,1,1,1
+Pisang Rebus,125,136.5,1.75,1,1,1
+Salak,150,63.6,0.75,0,1,0
+Semangka,150,48.0,0.5,0,1,0
+Alpukat,100,85.0,1.0,1,1,1
+Anggur,125,60.0,0.75,0,1,0
+Lengkeng,100,79.0,1.0,0,1,0
+Melon,120,46.0,0.5,1,1,1
+Mangga Harum Manis,300,90.0,1.0,0,1,0
+Pir Hijau,200,105.0,1.25,1,1,1
+Pisang Ambon,100,74.2,1.0,1,1,1
+Pisang Barangan,200,236.0,3.0,1,1,1
+Pisang Mas,125,120.0,1.5,1,1,1
+Pisang Raja,150,126.0,1.5,1,1,1
+Sirsak,125,55.0,0.25,0,1,0
+Durian Montong,100,134.0,1.5,0,1,0
+Rambutan,100,69.0,0.75,0,1,0
+Sawo,100,92.0,1.75,0,1,1
+Asinan,250,208.0,2.5,0,1,1
+Tauge Goreng,250,243.0,3.0,0,1,1
+Gado - Gado,150,295.0,3.75,1,1,1
+Ketoprak,250,153.0,2.0,1,1,1
+Pempek,200,384.0,4.75,0,1,1
+Rawon,160,331.0,4.0,0,1,1
+Soto Ayam,100,101.0,1.25,0,1,1
+Soto Padang,100,127.0,1.5,0,1,1
+Tongseng,120,331.0,4.0,0,1,1
+Hamburger,125,257.0,3.25,1,1,1
+Kerupuk Palembang,50,168.0,2.0,1,1,1
+Kerupuk Udang,20,72.0,1.0,1,1,1
+Mie Bakso,200,302.0,3.75,0,1,1
+Nasi Tim Ayam,420,588.0,7.25,1,1,0
+Pizza,125,163.0,2.0,0,1,1
+Sate Kambing,180,729.0,9.0,0,1,1
+Sayur Krecek,175,249.0,3.0,0,1,1
+Siomay,100,361.0,2.75,0,1,1
+Soto Betawi,150,135.0,1.75,0,1,1
+Soto Makassar,150,525.0,6.5,0,1,1
+Soto Sulung,150,86.0,1.0,0,1,1
+Arem-arem,75,225.0,2.75,1,1,1
+Bubur Kacang Ijo,100,102.0,1.25,1,0,0
+Ketupat Ketan,120,216.0,2.75,1,0,0
+Lemper,70,247.0,3.0,1,1,0
+Lepet,120,210.0,2.5,1,1,0
+Lepet Ketan,170,346.0,4.25,1,1,0
+Bolu Gulung,110,300.0,3.75,1,1,0
+Cakwee,50,143.0,1.75,1,1,0
+Getuk Lindri,60,127.0,1.75,1,1,1
+Hot Dog,100,285.0,3.5,1,1,1
+Kerak Telur,120,599.0,7.5,1,1,1
+Kue Nagasari,70,149.0,1.75,1,1,1
+Kue Pancong,80,231.0,3.0,1,1,1
+Mini Croissant,80,406.0,5.0,1,1,1
+Sandwich,100,164.0,2.0,1,1,1
+Serabi Pandan,60,137.0,1.75,1,1,1
+Semar Mendem,100,247.0,3.0,1,1,1
+Uli + Tape Ketan,160,559.0,7.0,1,1,1
+Bakpia,25,68.0,1.0,1,1,1
+Bakwan,100,270.0,3.25,1,1,1
+Bika Ambon,50,99.0,1.25,1,1,1
+Black Forrest,200,585.0,7.5,1,1,1
+Cara Bikang,70,128.0,1.5,1,1,1
+Cheese Cake,10,281.0,3.5,1,1,1
+Dunkin Donat Keju,170,283.0,3.5,1,1,1
+Emping Melinjo Asin,25,173.0,2.25,1,1,1
+Kastengels (10 bh),100,426.0,5.75,1,1,1
+Keju Lembaran (1bh),20,65.0,3.25,1,1,1
+Kerupuk Mie,25,119.0,1.5,1,1,1
+Klepon,60,68.0,0.75,1,1,1
+Kroket Kentang,75,146.0,1.25,1,1,1
+Kue Ape,60,151.0,2.0,1,1,1
+Kue Cubit,60,183.0,2.25,1,1,1
+Kue Cucur,90,152.0,2.0,1,1,1
+Kue Ku,50,237.0,3.0,1,1,1
+Kue Lumpur,80,232.0,3.0,1,1,1
+Kue Pukis,40,181.0,2.25,1,1,1
+Lapis Legit,50,307.0,3.75,1,1,1
+Lemet/Timus,120,603.0,7.5,1,1,1
+Lopis Ketan,125,350.0,4.25,1,1,1
+Lumpia,60,76.0,1.0,1,1,1
+Martabak Keju,100,265.0,3.0,0,1,1
+Martabak Mesir,100,200.0,2.5,0,1,1
+Martabak Telur,95,196.0,2.5,0,1,1
+Muffin Coklat,80,361.0,4.5,1,1,1
+Muffin Keju,80,400.0,5.0,1,1,1
+Nastar (7bh),150,538.0,6.75,1,1,1
+Onde-onde,65,317.0,4.0,1,1,0
+Pastel,75,302.0,3.75,1,1,1
+Potato Chip,170,298.0,3.75,1,1,1
+Putu Mayang,120,98.0,1.25,1,1,1
+Rempeyek Kacang,50,250.0,3.0,1,1,1
+Risol,100,247.0,3.0,1,1,1
+Roti Coklat,100,240.0,3.0,1,1,1
+Sosis Solo,50,191.0,2.25,1,1,1
+Sus Vla,85,129.0,1.5,1,1,1
+Talam Hijau,70,292.0,3.5,1,1,1
