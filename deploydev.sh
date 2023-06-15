@@ -1,8 +1,8 @@
 gcloud builds submit \
-  --tag gcr.io/$GOOGLE_CLOUD_PROJECT/nutripal-auth-api:v0.4
+  --tag gcr.io/$GOOGLE_CLOUD_PROJECT/nutripal-auth-api-dev:v0.1
 
-gcloud run deploy nutripal-auth-api \
-  --image gcr.io/$GOOGLE_CLOUD_PROJECT/nutripal-auth-api:v0.4 \
+gcloud run deploy nutripal-auth-api-dev \
+  --image gcr.io/$GOOGLE_CLOUD_PROJECT/nutripal-auth-api-dev:v0.1 \
   --platform managed \
   --region asia-southeast2 \
   --allow-unauthenticated \

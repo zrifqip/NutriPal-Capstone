@@ -60,7 +60,7 @@ router.post('/login', (req, res) => {
             //Password doesn't match
           return res.status(401).send({msg: 'Incorrect username or password!'});
         }
-        const token = jwt.sign({id:result[0].id_user},'my-32-character-ultra-secure-and-ultra-long-secret',{ expiresIn: '365d' });
+        const token = jwt.sign({id:result[0].id_user},process.env.SECRET_KEY,{ expiresIn: '365d' });
         db.query(`UPDATE user SET last_login = now(), fill_survey = true WHERE id_user = '${result[0].id_user}';`);
         //return res.status(200).send({error: false, msg: 'success', token, loginResult: result[0]});
         return res.status(200).send({
