@@ -21,13 +21,11 @@ router.post('/signup', (req, res,) => {
             if (req.body.confirmationPassword !== req.body.password) {
                 return res.status(409).send({ msg: 'Passwords do not match!' });
             } else {
-                console.log("Checkpoint CEK PASSWORD SAMA GA");
                 // Confirmation password matches the intended password
                 bcrypt.hash(req.body.password, 10, (err, hash) => {
                     if (err) {
                         return res.status(500).send({ msg: err });
                     } else {
-                        console.log("Checkpoint HASH OK");
                         // Password has been hashed
                         const query2 = "INSERT INTO user (name, email, password) values (?, ?, ?)"
                         db.query(query2, [(req.body.name), (req.body.email), hash], (err, result) => {
