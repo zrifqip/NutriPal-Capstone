@@ -2,6 +2,7 @@ const db = require('./dbConfig');
 const express = require('express');
 const router = express.Router();
 const { postDashboard,updateDashboard } = require('./dashboard');
+const authorization  = require('./authorization');
 
 router.get("/", (req, res) => {
     console.log("OK")
@@ -10,7 +11,7 @@ router.get("/", (req, res) => {
 
 // ------------------------------------- DASHBOARD
 //getHasilSurvey atau Dashboard data
-router.get("/dashboard/:idUser", (req, res) => {
+router.get("/dashboard/:idUser", authorization, (req, res) => {
     let idUser = parseInt(req.params.idUser);
 
     //Check invalid parameter or parameter missing
@@ -35,7 +36,7 @@ router.get("/dashboard/:idUser", (req, res) => {
 
 // ------------------------------------- SURVEY
 //get data Survey
-router.get("/survey/:idUser", (req, res) => {
+router.get("/survey/:idUser", authorization, (req, res) => {
     let idUser = parseInt(req.params.idUser);
 
     if (!idUser || isNaN(idUser)) {
@@ -55,15 +56,16 @@ router.get("/survey/:idUser", (req, res) => {
 });
 
 //post data survey dan hasil survey
-router.post("/survey/:idUser", (req, res) => {
+router.post("/survey/:idUser", authorization, (req, res) => {
     let idUser = parseInt(req.params.idUser);
-    const weight = typeof(req.body.weight) === 'string' ? parseInt(req.body.weight) : req.body.weight;
-    const height = typeof(req.body.height) === 'string' ? parseInt(req.body.height) : req.body.height;
-    const age = typeof(req.body.age) === 'string' ? parseInt(req.body.age) : req.body.age;
-    const smoking = typeof(req.body.smoking) === 'string' ? parseInt(req.body.smoking) : req.body.smoking;
-    const alcohol = typeof(req.body.alcohol) === 'string' ? parseInt(req.body.alcohol) : req.body.alcohol;
+    const weight = JSON.parse(req.body.weight);
+    const height = JSON.parse(req.body.height);
+    const age = JSON.parse(req.body.age);
+    const smoking = JSON.parse(req.body.smoking);
+    const alcohol = JSON.parse(req.body.alcohol);
     const sex = req.body.sex;
     const activity = req.body.activity;
+    
 
     //Check invalid parameter or parameter missing
     if (!idUser || !weight || !height || !age || !sex || !activity  ) {
@@ -95,13 +97,13 @@ router.post("/survey/:idUser", (req, res) => {
 });
 
 //update data dan Hasil Survey
-router.put("/survey/:idUser", (req, res) => {
+router.put("/survey/:idUser", authorization, (req, res) => {
     let idUser = parseInt(req.params.idUser);
-    const weight = typeof(req.body.weight) === 'string' ? parseInt(req.body.weight) : req.body.weight;
-    const height = typeof(req.body.height) === 'string' ? parseInt(req.body.height) : req.body.height;
-    const age = typeof(req.body.age) === 'string' ? parseInt(req.body.age) : req.body.age;
-    const smoking = typeof(req.body.smoking) === 'string' ? parseInt(req.body.smoking) : req.body.smoking;
-    const alcohol = typeof(req.body.alcohol) === 'string' ? parseInt(req.body.alcohol) : req.body.alcohol;
+    const weight = JSON.parse(req.body.weight);
+    const height = JSON.parse(req.body.height);
+    const age = JSON.parse(req.body.age);
+    const smoking = JSON.parse(req.body.smoking);
+    const alcohol = JSON.parse(req.body.alcohol);
     const sex = req.body.sex;
     const activity = req.body.activity;
 
