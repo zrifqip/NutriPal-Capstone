@@ -3,6 +3,8 @@ package com.submission.nutripal.di
 import android.content.Context
 import com.submission.nutripal.data.UserRepository
 import com.submission.nutripal.api.ApiService
+import com.submission.nutripal.api.FoodApiService
+import com.submission.nutripal.api.RecommendationApiService
 import com.submission.nutripal.api.SurveyApiService
 import com.submission.nutripal.data.PreferenceManager
 import com.submission.nutripal.data.SurveyRepository
@@ -55,6 +57,37 @@ object AppModule {
 
         return retrofit.create(SurveyApiService::class.java)
     }
+    @Provides
+    @Singleton
+    fun provideFoodApiService(): FoodApiService {
+        val interceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+        val okHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://nutripal-food-ml-api-gsnjwstg4a-et.a.run.app")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+        return retrofit.create(FoodApiService::class.java)
+    }
+    @Provides
+    @Singleton
+    fun provideRecommendationApiService(): RecommendationApiService {
+        val interceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+        val okHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://nutripal-recommendation-api-gsnjwstg4a-et.a.run.app")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+        return retrofit.create(RecommendationApiService::class.java)
+
+    }
+
     @Provides
     fun providePreferenceManager(@ApplicationContext context: Context): PreferenceManager {
         return PreferenceManager(context)

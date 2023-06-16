@@ -55,6 +55,7 @@ fun ResultScreen() {
         }
         is UiState.Success -> {
             val result = (uiState as UiState.Success<SurveyResult>).data
+            resultViewModel.saveSurveyResult(result)
             bmi = "${result.bmi}"
             weight = "${result.idealWeight} kg"
             calorieTarget = "${result.calorieTarget} kcal"
@@ -102,8 +103,6 @@ fun ResultScreen() {
             }
         }
     }
-
-
 }
 
 

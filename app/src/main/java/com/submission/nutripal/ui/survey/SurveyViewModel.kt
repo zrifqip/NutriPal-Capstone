@@ -26,9 +26,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.submission.nutripal.data.LoginResponse
+import com.submission.nutripal.data.LoginResult
 import com.submission.nutripal.data.PreferenceManager
 import com.submission.nutripal.data.SurveyRepository
 import com.submission.nutripal.data.SurveyResponse
+import com.submission.nutripal.data.SurveyResult
 import com.submission.nutripal.data.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -148,6 +150,7 @@ class SurveyViewModel @Inject constructor(
                     token,id, sex, height, weight, age, smoking,activity, alcohol)
                 uiState.value = UiState.Success(response)
                 // Handle the response here if needed
+                preferenceManager.saveSurveyResult(response.surveyResult)
                 preferenceManager.saveSurvey()
                 onSurveyComplete()
             } catch (e: Exception) {
@@ -210,7 +213,12 @@ class SurveyViewModel @Inject constructor(
             SurveyQuestion.DRINK -> drinkResponse != null
         }
     }
-
+    //get user
+    suspend fun saveUser(){
+        preferenceManager.saveSurveyResult(surveyRepository.getSurvey(preferenceManager.getLoginResult().id_user,preferenceManager.getLoginResult().token).surveyResult)
+        //get survey result
+        Log.d("survey",preferenceManager.getSurveyResult().toString())
+    }
     private fun createSurveyScreenData(): SurveyScreenData {
         return SurveyScreenData(
             questionIndex = questionIndex,

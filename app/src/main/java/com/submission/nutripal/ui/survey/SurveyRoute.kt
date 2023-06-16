@@ -58,6 +58,7 @@ fun SurveyRoute(
     if (viewModel.isSurveyFilled() && !isUpdate) {
 
         LaunchedEffect(uiState) {
+            viewModel.saveUser()
             onSurveyComplete()
         }
     }
@@ -71,6 +72,7 @@ fun SurveyRoute(
         }
         is UiState.Success -> {
             LaunchedEffect(uiState) {
+                Log.d("ViewModel", "SurveyRoute: ${viewModel.isSurveyFilled()}, $isUpdate")
                 onSurveyComplete()
             }
         }

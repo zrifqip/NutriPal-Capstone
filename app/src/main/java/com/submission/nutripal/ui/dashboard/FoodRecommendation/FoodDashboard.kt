@@ -22,32 +22,47 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Icon
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.submission.nutripal.data.Food
 
 @Composable
 fun FoodRecommendation() {
-    // Mock data
-    val breakfastFood = listOf(
-        Food("Breakfast", "Eggs", "2 eggs", 140),
-        Food("Breakfast", "Toast", "2 slices", 200),
-        Food("Breakfast", "Pancakes", "3 pancakes", 600)
-    )
-    val lunchFood = listOf(
-        Food("Lunch", "Sandwich", "1 sandwich", 300),
-        Food("Lunch", "Salad", "1 bowl", 150),
-        Food("Lunch", "Soup", "1 bowl", 250)
-    )
-    val dinnerFood = listOf(
-        Food("Dinner", "Steak", "200g", 500),
-        Food("Dinner", "Fish", "200g", 250),
-        Food("Dinner", "Pasta", "1 plate", 400)
-    )
+
+    val foodViewModel: FoodViewModel = hiltViewModel()
+    val foodResponse by foodViewModel.foodData.observeAsState()
+    val breakfastFood = foodResponse?.
+            recommendationResult?.breakfast?.values?.map {
+        Food("Breakfast"
+            , it.food_name,
+            "${it.unit} units",
+            it.calories
+        )
+        } ?: listOf()
+    val lunchFood = foodResponse?.
+            recommendationResult?.lunch?.values?.map {
+        Food("Lunch",
+            it.food_name,
+            "${it.unit} units",
+            it.calories
+        )
+        } ?: listOf()
+    val dinnerFood = foodResponse?.
+            recommendationResult?.dinner?.values?.map {
+        Food("Dinner",
+            it.food_name,
+            "${it.unit} units",
+            it.calories
+        )
+        } ?: listOf()
+
 
     var selectedMeal by remember { mutableStateOf("Breakfast") }
     val foodList = when (selectedMeal) {
@@ -104,7 +119,9 @@ fun DropdownMenu(
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier.animateContentSize().padding(top = 8.dp)
+            modifier = Modifier
+                .animateContentSize()
+                .padding(top = 8.dp)
         ) {
             items.forEach { label ->
                 DropdownMenuItem(

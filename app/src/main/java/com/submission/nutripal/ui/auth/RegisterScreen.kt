@@ -187,6 +187,7 @@ fun RegisterScreen(
                     )
                     Log.d("RegisterScreen", user.toString())
                     registerViewModel.registerUser(user)
+
                 }, modifier = Modifier.widthIn(min = 200.dp, max = 400.dp),
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = MaterialTheme.colors.primary,

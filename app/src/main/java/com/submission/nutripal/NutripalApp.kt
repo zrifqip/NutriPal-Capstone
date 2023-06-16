@@ -105,15 +105,12 @@ fun NutripalNavHost(
             ) { innerPadding ->
                 NavHost(
                     navController = dashboardNavController,
-                    startDestination = Screen.Dashboard.Home.route,
+                    startDestination = Screen.Dashboard.SurveyResult.route,
                     modifier = Modifier.padding(innerPadding)
                 ) {
 
                     composable(Screen.Dashboard.Home.route) {
                         HomeScreen()
-                    }
-                    composable(Screen.Dashboard.Foodlist.route) {
-                        // do something
                     }
                     composable(Screen.Dashboard.Profile.route) {
                         ProfileScreen(

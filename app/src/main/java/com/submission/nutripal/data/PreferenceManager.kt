@@ -19,12 +19,29 @@ class PreferenceManager(context: Context) {
         editor.putString("token", loginResult.token)
         editor.apply()
     }
-    fun saveFillSurvey(surveyResult: SurveyResult){
+    fun saveSurveyResult(surveyResult: SurveyResult){
         editor.putInt("idHasilSurvei", surveyResult.idHasilSurvei)
-
-
+        editor.putInt("idSurvei", surveyResult.idSurvei)
+        editor.putInt("idUser", surveyResult.idUser)
+        editor.putString("bmiCategory", surveyResult.bmiCategory)
+        editor.putFloat("bmi", surveyResult.bmi)
+        editor.putInt("calorieTarget", surveyResult.calorieTarget)
+        editor.putFloat("idealWeight", surveyResult.idealWeight)
+        editor.apply()
+    }
+    fun getSurveyResult(): SurveyResult {
+        return SurveyResult(
+            sharedPreferences.getInt("idHasilSurvei", 0),
+            sharedPreferences.getInt("idSurvei", 0),
+            sharedPreferences.getInt("idUser", 0),
+            sharedPreferences.getString("bmiCategory", "")!!,
+            sharedPreferences.getFloat("bmi", 0f),
+            sharedPreferences.getInt("calorieTarget", 0),
+            sharedPreferences.getFloat("idealWeight", 0f),
+        )
 
     }
+
 
     fun getLoginResult(): LoginResult {
         return LoginResult(
@@ -41,7 +58,7 @@ class PreferenceManager(context: Context) {
         editor.remove("id_user")
         editor.remove("name")
         editor.remove("email")
-        editor.remove("fill_survey")
+        editor.remove("survey")
         editor.remove("last_login")
         editor.remove("token")
         editor.apply()

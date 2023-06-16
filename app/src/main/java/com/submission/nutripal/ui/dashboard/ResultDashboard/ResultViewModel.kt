@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ResultViewModel @Inject constructor(private val surveyRepository: SurveyRepository,preferenceManager: PreferenceManager) : ViewModel() {
+class ResultViewModel @Inject constructor(private val surveyRepository: SurveyRepository,private val preferenceManager: PreferenceManager) : ViewModel() {
     val uiState = MutableLiveData<UiState<SurveyResult>>()
     val id = preferenceManager.getLoginResult().id_user
     val token = preferenceManager.getLoginResult().token
@@ -35,6 +35,9 @@ class ResultViewModel @Inject constructor(private val surveyRepository: SurveyRe
                 Log.d("ResultViewModel", "getSurveyResult: ${e.message}")
             }
         }
+    }
+    fun saveSurveyResult(surveyResult: SurveyResult){
+        preferenceManager.saveSurveyResult(surveyResult)
     }
 
 }
