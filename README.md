@@ -56,8 +56,8 @@ node index.js
 
 ## How to Deploy The Project
 There are many ways to deploy the project to Cloud Run. Here, I demonstrated how to deploy the project using Cloud Shell.
-1. Open Cloud Shell Editor in your [GCP console](https://console.cloud.google.com/) page
-2. Clone the project
+1. Open Cloud Shell Editor in your [GCP console](https://shell.cloud.google.com/)
+2. Open terminal and clone the project
 ```git 
 git clone -b api https://github.com/zrifqip/NutriPal-Capstone.git
 ```
@@ -82,4 +82,4 @@ chmod u+x deploy.sh
 Ufi Nihayatal Izza Sarinop (c017dsy2780, Bangkit Academy 2023)
 
 ## Documentation
- for more details on the available routes and their request/response format, click [Here](https://tinyurl.com/nutripalAuthAPIDocumentation)
+ For more details on the available routes and their request/response format, click [Here](https://tinyurl.com/nutripalAuthAPIDocumentation)
