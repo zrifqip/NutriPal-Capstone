@@ -83,3 +83,45 @@ Ufi Nihayatal Izza Sarinop (c017dsy2780, Bangkit Academy 2023)
 
 ## Documentation
  For more details on the available routes and their request/response format, click [Here](https://tinyurl.com/nutripalAuthAPIDocumentation)
+ 
+### Base Url : 
+https://spezia-app-352214.et.r.appspot.com/
+### Endpoint 
+* **Login**
+  * **Endpoint :** `/login`
+  * **Method :** `POST`
+  * **Body :** </br>
+    `email` as `string`</br>
+    `password` as `string`
+  * **response :** </br>
+    * **status code :** 200 </br>
+      **body :**
+      ```
+      {
+          "error": false,
+          "message": "Login successful",
+          "loginResult": {
+              "userId": "1",
+              "username": "Arif Faizin",
+              "email: : "ariffaizin@gmail.com",
+              "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLXlqNXBjX0xBUkNfQWdLNjEiLCJpYXQiOjE2NDE3OTk5NDl9.flEMaQ7zsdYkxuyGbiXjEDXO8kuDTcI__3UjCwt6R_I"
+          }
+      }
+      ```
+
+* **Register**
+  * **Endpoint :** `/register`
+  * **Method :** `POST`
+  * **Body :** </br>
+    `username` as `string` </br>
+    `email` as `string` </br>
+    `password` as `string`
+  * **Response :** </br>
+    * **status code :** 200 </br>
+      **body :**
+      ```
+      {
+          "error": false,
+          "message": "User created successfully"
+      }
+      ```
