@@ -1,6 +1,7 @@
-from flask import Flask, request, jsonify, requests
+from flask import Flask, request, jsonify
 from function import *
 import json
+import requests
 
 app = Flask(__name__)
 
@@ -10,7 +11,7 @@ def home():
 
 def make_request(url, method, headers, body):
     response = requests.request(method, url, headers=headers, json=body)
-    return response.json()
+    return response
 
 @app.route('/api/predict/<idHasilSurvey>',methods=['POST'])
 def predict(idHasilSurvey):
@@ -22,18 +23,19 @@ def predict(idHasilSurvey):
         breakfast_recommendation, lunch_recommendation, dinner_recommendation = generate_meal_recommendation(daily_calorie)
         
         result = {
-        "breakfast": {f"id{i+1}": (val+1) for i, val in enumerate(breakfast_recommendation)},
-        "lunch": {f"id{i+1}": (val+1) for i, val in enumerate(lunch_recommendation)},
-        "dinner": {f"id{i+1}": (val+1) for i, val in enumerate(dinner_recommendation)}
+        'breakfast': {f'id{i+1}': (val+1) for i, val in enumerate(breakfast_recommendation)},
+        'lunch': {f'id{i+1}': (val+1) for i, val in enumerate(lunch_recommendation)},
+        'dinner': {f'id{i+1}': (val+1) for i, val in enumerate(dinner_recommendation)}
         }
-
-        request_headers = {'Authorization': token}
-        request_body = json.dumps(result)
-        api_url = 'https://nutripal-recommendation-api-gsnjwstg4a-et.a.run.app/recommendation/' + str(idHasilSurvey)
+        
+        request_headers = {"Authorization": token}
+        json_body = json.dumps(result, ensure_ascii=False)
+        print(result)
+        api_url = 'https://nutripal-recommendation-api-gsnjwstg4a-et.a.run.app/api/' + str(idHasilSurvey)
         # Call the function to make the HTTP request
-        response = make_request(api_url, 'POST', request_headers, request_body)
+        #response = make_request(api_url, 'POST', request_headers, json = result)
         #print(response)
-        #response = requests.post('https://example.com/api/endpoint', json=result)
+        response = requests.post(api_url, headers=request_headers, json=result)
         
         if response.status_code == 201:
             return jsonify({

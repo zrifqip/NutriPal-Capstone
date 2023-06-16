@@ -10,7 +10,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
-dataset = pd.read_csv('food_data_rev.csv', encoding='latin-1')
+dataset = pd.read_csv('food_data.csv', encoding='latin-1')
 
 label_encoder = LabelEncoder()
 dataset['food_name'] = label_encoder.fit_transform(dataset['food_name'])
@@ -35,21 +35,4 @@ lunch_predictions = lunch_classifier.predict(X_test)
 dinner_predictions = dinner_classifier.predict(X_test)
 
 # Save models using pickle
-'''models = {
-    'breakfast': breakfast_classifier,
-    'lunch': lunch_classifier,
-    'dinner': dinner_classifier,
-}'''
-
-# Serialize and store them using pickle
-#pickle.dump(models, open('models.pkl','wb'))
 pickle.dump((breakfast_classifier, lunch_classifier, dinner_classifier, X), open('models.pkl','wb'))
-
-'''print("Breakfast Recommendation:")
-print(breakfast_recommendation)
-
-print("Lunch Recommendation:")
-print(lunch_recommendation)
-
-print("Dinner Recommendation:")
-print(dinner_recommendation)'''
