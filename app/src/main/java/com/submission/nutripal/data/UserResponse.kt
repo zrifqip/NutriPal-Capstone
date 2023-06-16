@@ -35,13 +35,12 @@ data class LoginResult(
     val name: String,
     @SerializedName("email")
     val email: String,
-    @SerializedName("fill_survey")
-    val fill_survey: Int,
+    @SerializedName("survey")
+    val survey: Int,
     @SerializedName("last_login")
     val last_login: String,
     @SerializedName("token")
     val token : String,
-
 )
 
 

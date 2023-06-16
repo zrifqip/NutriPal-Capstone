@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.submission.nutripal.Food
+import com.submission.nutripal.data.Food
 
 @Composable
 fun FoodItem(food: Food, onItemClick: (Food) -> Unit) {

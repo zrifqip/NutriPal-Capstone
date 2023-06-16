@@ -1,6 +1,7 @@
 package com.submission.nutripal.api
 
 import com.submission.nutripal.data.LoginResponse
+import com.submission.nutripal.data.SurveyResponse
 import com.submission.nutripal.data.UserResponse
 import retrofit2.http.*
 
@@ -15,6 +16,5 @@ interface ApiService{
     @POST("/auth/login")
         suspend fun postLogin(@Field("email") email: String,
                   @Field("password") password: String): LoginResponse
-
 
 }

@@ -28,16 +28,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
+
+
 import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -61,8 +64,8 @@ fun SurveyQuestionsScreen(
     onDonePressed: () -> Unit,
     content: @Composable (PaddingValues) -> Unit,
 ) {
-
-    Surface(modifier = Modifier) {
+    //set the background color of the screen
+    Surface(modifier = Modifier,color = MaterialTheme.colors.background) {
         Scaffold(
             topBar = {
                 SurveyTopAppBar(
@@ -110,7 +113,7 @@ fun SurveyTopAppBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp),
-            trackColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+            color = MaterialTheme.colors.primary
         )
     }
 }
@@ -123,13 +126,11 @@ private fun TopAppBarTitle(
     Row(modifier = modifier) {
         Text(
             text = (questionIndex + 1).toString(),
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+            style = MaterialTheme.typography.h2
         )
         Text(
             text = stringResource(R.string.question_count, totalQuestionsCount),
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+            style = MaterialTheme.typography.h2,
         )
     }
 }
@@ -158,7 +159,12 @@ fun SurveyBottomBar(
                     modifier = Modifier
                         .weight(1f)
                         .height(48.dp),
-                    onClick = onPreviousPressed
+
+                    onClick = onPreviousPressed,
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = MaterialTheme.colors.primary
+                    )
+
                 ) {
                     Text(text = stringResource(id = R.string.previous))
                 }
@@ -172,6 +178,9 @@ fun SurveyBottomBar(
                         .height(48.dp),
                     onClick = onDonePressed,
                     enabled = isNextButtonEnabled,
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = MaterialTheme.colors.primary
+                    )
                 ) {
                     Text(text = stringResource(id = R.string.done))
                 }
@@ -182,6 +191,9 @@ fun SurveyBottomBar(
                         .height(48.dp),
                     onClick = onNextPressed,
                     enabled = isNextButtonEnabled,
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = MaterialTheme.colors.primary
+                    )
                 ) {
                     Text(text = stringResource(id = R.string.next))
                 }

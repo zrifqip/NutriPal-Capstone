@@ -25,8 +25,6 @@ class RegisterViewModel @Inject constructor(private val userRepository: UserRepo
                 val result = userRepository.registerUser(user)
                 uiState.value = UiState.Success(result)
                 Log.d("RegisterViewModel", "registerUser: $result")
-                delay(100)
-                uiState.value = UiState.Idle
             } catch (e: Exception) {
                 uiState.value = UiState.Error(e.message.toString())
                 Log.d("RegisterViewModel", "registerUser: ${e.message}")

@@ -1,4 +1,4 @@
-package com.submission.nutripal
+package com.submission.nutripal.data
 
 data class Food(
     val type: String,

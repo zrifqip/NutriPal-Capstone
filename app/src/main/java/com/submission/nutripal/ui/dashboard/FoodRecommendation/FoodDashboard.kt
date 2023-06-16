@@ -28,7 +28,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.submission.nutripal.Food
+import com.submission.nutripal.data.Food
 
 @Composable
 fun FoodRecommendation() {

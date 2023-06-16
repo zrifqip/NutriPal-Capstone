@@ -13,23 +13,17 @@ private val DarkColorPalette = darkColors(
 )
 
 private val LightColorPalette = lightColors(
-    onBackground = Green200,
-    primary = Green200,
-    primaryVariant = Green500,
-    secondary = Green700
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+    primary = Green900,
+    surface = Green200,
+    secondary = Green700,
+    background = Green500,
+    onSurface = Green700,
+    onPrimary = white,
+    onSecondary = white,
 )
 
 @Composable
-fun NutripalTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun NutripalTheme( content: @Composable () -> Unit) {
     val colors = LightColorPalette
 
     MaterialTheme(

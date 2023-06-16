@@ -113,11 +113,7 @@ fun RadioButtonWithImageRow(
 ) {
     Surface(
         shape = MaterialTheme.shapes.small,
-        color = if (selected) {
-            MaterialTheme.colorScheme.primaryContainer
-        } else {
-            MaterialTheme.colorScheme.surface
-        },
+
         border = BorderStroke(
             width = 1.dp,
             color = if (selected) {

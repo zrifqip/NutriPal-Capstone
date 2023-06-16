@@ -1,5 +1,7 @@
-package com.submission.nutripal
+package com.submission.nutripal.ui.dashboard.ResultDashboard
+import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -10,29 +12,61 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.Role.Companion.Image
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.submission.nutripal.R
+import com.submission.nutripal.data.SurveyResult
+import com.submission.nutripal.data.UiState
 
 @Composable
 fun ResultScreen() {
+    val resultViewModel: ResultViewModel = hiltViewModel()
+    val uiState by resultViewModel.uiState.observeAsState(UiState.Idle)
 
-    // Dummy data for illustration, you can replace these with actual data.
-    val bmi = "24.5"
-    val weight = "70 kg"
-    val calorieTarget = "2000 kcal"
-    val idealWeight = "65 kg"
-    val bmiCategory = "Normal weight"
+    // Initialize the state-backed variables
+    var bmi by remember { mutableStateOf("") }
+    var weight by remember { mutableStateOf("") }
+    var calorieTarget by remember { mutableStateOf("") }
+    var idealWeight by remember { mutableStateOf("") }
+    var bmiCategory by remember { mutableStateOf("") }
 
+    LaunchedEffect(resultViewModel) {
+        resultViewModel.getSurveyResult()
+    }
+
+    when (uiState) {
+        is UiState.Idle -> {
+            //do nothing
+        }
+        is UiState.Loading -> {
+            // Display a loading spinner, progress bar or some placeholder UI
+        }
+        is UiState.Error -> {
+            // Display an error message
+            Log.e("ResultScreen", "Error: ${(uiState as UiState.Error).message}")
+        }
+        is UiState.Success -> {
+            val result = (uiState as UiState.Success<SurveyResult>).data
+            bmi = "${result.bmi}"
+            weight = "${result.idealWeight} kg"
+            calorieTarget = "${result.calorieTarget} kcal"
+            idealWeight = "${result.idealWeight} kg"
+            bmiCategory = result.bmiCategory
+        }
+    }
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
         elevation = 8.dp,
-        backgroundColor = Color.White
     ) {
         Column(
             modifier = Modifier
@@ -68,7 +102,11 @@ fun ResultScreen() {
             }
         }
     }
+
+
 }
+
+
 
 @Composable
 fun InfoCard(title: String, content: String, painter: Painter) {
@@ -76,7 +114,9 @@ fun InfoCard(title: String, content: String, painter: Painter) {
         modifier = Modifier
             .fillMaxWidth(0.9f)
             .padding(8.dp),
-        elevation = 4.dp
+        elevation = 4.dp,
+        backgroundColor = MaterialTheme.colors.primary
+
     ) {
 
         Column(
@@ -108,7 +148,8 @@ fun InfoCard(title: String, content: String, painter: Painter) {
 fun LargeInfoCard(title1: String, content1: String, title2: String, content2: String) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = 4.dp
+        elevation = 4.dp,
+        backgroundColor = MaterialTheme.colors.primary
     ) {
         Column(
             modifier = Modifier

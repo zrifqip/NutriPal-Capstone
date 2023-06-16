@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.submission.nutripal.data.LoginBody
 import com.submission.nutripal.data.LoginResponse
 import com.submission.nutripal.data.LoginResult
+import com.submission.nutripal.data.PreferenceManager
 import com.submission.nutripal.data.UiState
 import com.submission.nutripal.data.User
 import com.submission.nutripal.data.UserRepository
@@ -16,8 +17,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
+class LoginViewModel @Inject constructor(private val userRepository: UserRepository,private val preferenceManager: PreferenceManager) : ViewModel() {
     val uiState = MutableLiveData<UiState<LoginResponse>>()
+
+    fun checkLogin() : Boolean{
+        return preferenceManager.getLoginResult().token != ""
+    }
 
     fun loginUser(loginBody: LoginBody) {
         uiState.value = UiState.Loading
@@ -25,6 +30,9 @@ class LoginViewModel @Inject constructor(private val userRepository: UserReposit
             uiState.value = UiState.Loading
             try {
                 val result = userRepository.loginUser(loginBody.email, loginBody.password)
+                preferenceManager.saveLoginResult(result.result)
+                Log.d("LoginViewModel", "loginUser: ${result.result}")
+                Log.d("LoginViewModel", "loginUser: ${preferenceManager.getLoginResult()}")
                 uiState.value = UiState.Success(result)
             } catch (e: Exception) {
                 uiState.value = UiState.Error(e.message.toString())

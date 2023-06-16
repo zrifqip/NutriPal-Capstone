@@ -16,16 +16,32 @@
 
 package com.submission.nutripal.ui.survey
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.submission.nutripal.data.LoginResponse
+import com.submission.nutripal.data.PreferenceManager
+import com.submission.nutripal.data.SurveyRepository
+import com.submission.nutripal.data.SurveyResponse
+import com.submission.nutripal.data.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-const val simpleDateFormatPattern = "EEE, MMM d, yyyy"
-
-class SurveyViewModel(
+@HiltViewModel
+class SurveyViewModel @Inject constructor(
+    private val surveyRepository: SurveyRepository,
+    private val preferenceManager: PreferenceManager,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
-
+    val uiState = MutableLiveData<UiState<SurveyResponse>>()
     private val questionOrder: List<SurveyQuestion> = listOf(
         SurveyQuestion.STARTER,
         SurveyQuestion.GENDER,
@@ -69,7 +85,7 @@ class SurveyViewModel(
     // ----- Survey status exposed as State -----
 
     private val _surveyScreenData = mutableStateOf(createSurveyScreenData())
-    val surveyScreenData: SurveyScreenData?
+    val surveyScreenData: SurveyScreenData
         get() = _surveyScreenData.value
 
     private val _isNextEnabled = mutableStateOf(false)
@@ -102,9 +118,45 @@ class SurveyViewModel(
         _surveyScreenData.value = createSurveyScreenData()
     }
 
-    fun onDonePressed(onSurveyComplete: () -> Unit) {
-        // Here is where you could validate that the requirements of the survey are complete
-        onSurveyComplete()
+    fun onDonePressed(onSurveyComplete: () -> Unit){
+
+        viewModelScope.launch {
+            try {
+                // You will need to replace these parameters with your actual survey data
+                val loginResult = preferenceManager.getLoginResult()
+                val id = loginResult.id_user
+                Log.d("id", id.toString())
+                val sex = context.getString(_genderResponse.value?.stringResourceId ?: 0)
+                val height = _heightResponse.value.toIntOrNull() ?: 0
+                val weight = _weightResponse.value.toFloatOrNull() ?: 0f
+                val age = _ageResponse.value.toIntOrNull() ?: 0
+                val smoking = if (context.getString(_smokeResponse.value ?: 0) == "Yes") 1 else 0
+                val activity = if( context.getString(_activityResponse.value ?: 0) == "Sangat Aktif")
+                    "Very Active"
+                else if (context.getString(_activityResponse.value ?: 0) == "Aktif")
+                    "Active"
+                else if (context.getString(_activityResponse.value ?: 0) == "Jarang")
+                    "Moderately Active"
+                else if (context.getString(_activityResponse.value ?: 0) == "Tidak Aktif")
+                    "Sedentary" else TODO()
+                val alcohol = if (context.getString(_drinkResponse.value ?: 0) == "Yes") 1 else 0
+                val token = loginResult.token
+                //log all the data
+                val response = if(loginResult.survey == 0)surveyRepository.postSurvey(
+                    token,id, sex, height, weight, age, smoking,activity, alcohol)
+                else surveyRepository.updateSurvey(
+                    token,id, sex, height, weight, age, smoking,activity, alcohol)
+                uiState.value = UiState.Success(response)
+                // Handle the response here if needed
+                preferenceManager.saveSurvey()
+                onSurveyComplete()
+            } catch (e: Exception) {
+                uiState.value = UiState.Error(e.message ?: "An unknown error occurred")
+            }
+        }
+    }
+    fun clearLoginResult() {
+        preferenceManager.clearLoginResult()
     }
 
 
@@ -115,7 +167,9 @@ class SurveyViewModel(
     fun StartResponse(){
         _isNextEnabled.value = getIsNextEnabled()
     }
-
+    fun isSurveyFilled(): Boolean {
+        return preferenceManager.getLoginResult().survey != 0
+    }
 
 
     fun onWeightResponse(weight: String) {
@@ -168,24 +222,12 @@ class SurveyViewModel(
     }
 }
 
-class SurveyViewModelFactory(
-) : ViewModelProvider.Factory {
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(SurveyViewModel::class.java)) {
-            return SurveyViewModel() as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}
-
 enum class SurveyQuestion {
     STARTER,
     GENDER,
     AGE,
     WEIGHT,
     HEIGHT,
-
     SMOKE,
     DRINK,
     ACTIVITY,

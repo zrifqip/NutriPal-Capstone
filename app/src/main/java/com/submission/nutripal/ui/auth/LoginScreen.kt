@@ -1,12 +1,10 @@
-package com.submission.nutripal
+package com.submission.nutripal.ui.auth
 
-import android.content.Context
-import android.graphics.drawable.shapes.Shape
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.*
@@ -18,25 +16,24 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusOrder
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImagePainter.State.Empty.painter
+import com.submission.nutripal.R
 import com.submission.nutripal.data.LoginBody
 import com.submission.nutripal.data.UiState
+import com.submission.nutripal.ui.InputType
 import com.submission.nutripal.ui.TextInput
-import com.submission.nutripal.ui.auth.LoginViewModel
-import com.submission.nutripal.ui.theme.Shapes
 
 
 @Composable
@@ -54,50 +51,55 @@ fun LoginScreen(
     val passwordInputType = InputType.Password
     val uiState by loginViewModel.uiState.observeAsState(UiState.Idle)
 
-    when (uiState) {
-        is UiState.Idle -> {
-            //do nothing
-        }
-        is UiState.Loading -> {
-            CircularProgressIndicator(color = colorResource(id = R.color.green_900))
-        }
-        is UiState.Success -> {
-            LaunchedEffect(uiState) {
-                onLogin()
-            }
-        }
-        is UiState.Error -> {
-            Text(text = (uiState as UiState.Error).message,color = Color.Red)
+    if( loginViewModel.checkLogin()){
+        LaunchedEffect(uiState) {
+            onLogin()
         }
     }
+
+
     Box(
         modifier = Modifier
-            //set background color
-            .background(colorResource(id = R.color.green_500))
             .fillMaxSize()
     ) {
-
+        when (uiState) {
+            is UiState.Idle -> {
+                //do nothing
+            }
+            is UiState.Loading -> {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
+            is UiState.Success -> {
+                LaunchedEffect(uiState) {
+                    onLogin()
+                }
+            }
+            is UiState.Error -> {
+                Text(text = (uiState as UiState.Error).message, color = Color.Red)
+            }
+        }
         Box(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth()
-                //make the color white
-                .background(Color.White, RoundedCornerShape(16.dp))
                 .align(Alignment.Center)
-
-        )
-        {
+                .background(MaterialTheme.colors.surface, RoundedCornerShape(16.dp))
+        ) {
             Column(
                 modifier = Modifier
                     .navigationBarsPadding()
-                    .padding(16.dp)
-,
+                    .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(
                     16.dp,
                     alignment = Alignment.CenterVertically
                 ),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                Image(painter = painterResource(id = R.drawable.nutripal_logo), contentDescription = "Logo")
+                Text("Welcome to Nutripal", fontSize = 24.sp, modifier = Modifier.align(Alignment.CenterHorizontally))
+                Text("Nutripal is a food recommendation app for your diet", fontSize = 16.sp, modifier = Modifier.align(Alignment.CenterHorizontally), textAlign = TextAlign.Center)
+
+                // Here is the rest of your code
                 Text(
                     "Sign In",
                     fontSize = 20.sp,
@@ -117,8 +119,6 @@ fun LoginScreen(
                             passwordFocusRequest.requestFocus()
                         })
                 )
-
-
                 Text(
                     "Password",
                     modifier = Modifier.align(Alignment.Start)
@@ -132,8 +132,10 @@ fun LoginScreen(
                     }),
                     focusRequester = passwordFocusRequest
                 )
+                if(uiState is UiState.Error){
+                    Text(text = "Wrong Email and password", color = Color.Red)
+                }
                 Divider(
-                    color = Color.White.copy(alpha = 0.3f),
                     thickness = 1.dp,
                     modifier = Modifier.padding(top = 18.dp)
                 )
@@ -146,26 +148,21 @@ fun LoginScreen(
                     loginViewModel.loginUser(login)
                 }
                     , modifier = Modifier.widthIn(min = 200.dp, max = 400.dp),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.green_700))) {
-                    Text("SIGN IN", Modifier.padding(vertical = 8.dp))
+                ) {
+                    Text("SIGN IN", Modifier.padding(vertical = 8.dp),
+                        color = MaterialTheme.colors.onPrimary)
                 }
-                Divider(
-                    color = Color.White.copy(alpha = 0.3f),
-                    thickness = 1.dp,
-                    modifier = Modifier.padding(top = 48.dp)
-                )
+
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Don't have an account?", color = colorResource(id =R.color.green_700 ),
+                    Text("Don't have an account?",
                         fontWeight = FontWeight.Medium
                     )
                     TextButton(onClick = onRegister) {
-                        Text("SIGN UP",color = colorResource(id =R.color.green_900 ), fontWeight = FontWeight.Bold)
+                        Text("SIGN UP", color = MaterialTheme.colors.primary)
                     }
                 }
             }
         }
-
-
     }
 }
 
