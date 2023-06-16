@@ -1,7 +1,7 @@
-# NutriPal-Capstone Authentication API
+# NutriPal-Capstone Food-ML API
 
 ## Description
-This API is developed using Flask and deployed on [Google Cloud Run](https://cloud.google.com/run). It is designed to generate meal recommendation using ML model . It accepts HTTP request body in either JSON format.
+This API is developed using Flask and deployed on [Google Cloud Run](https://cloud.google.com/run). It is designed to generate meal recommendation using ML model. It accepts HTTP request body only in JSON format.
 
 ## How to Install and Run The Project Locally
 1. Clone this branch 
@@ -42,8 +42,9 @@ chmod u+x deploy.sh
 ```
 
 ## Credit
+Andi Sekar Ayu Fadilla (M151DSY0570, Bangkit Academy 2023)
+Astried Sulastri Madinah (M297DSY0473, Bangkit Academy 2023)
 Ufi Nihayatal Izza Sarinop (c017dsy2780, Bangkit Academy 2023)
 
 ## Documentation
  For more details on the available routes and their request/response format, click [Here](https://tinyurl.com/nutripalFoodMLAPI)
- 
