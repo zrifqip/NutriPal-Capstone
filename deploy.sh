@@ -8,8 +8,8 @@ gcloud run deploy nutripal-auth-api \
   --allow-unauthenticated \
   --max-instances=1 \
   --add-cloudsql-instances INSTANCE_CONNECTION_NAME \
-  --set-env-vars INSTANCE_UNIX_SOCKET="/cloudsql/...:nutripal" \
-  --set-env-vars INSTANCE_CONNECTION_NAME="...:nutripal" \
+  --set-env-vars INSTANCE_UNIX_SOCKET="...l" \
+  --set-env-vars INSTANCE_CONNECTION_NAME="..." \
   --set-env-vars DB_NAME="...." \
   --set-env-vars DB_USER="..." \
   --set-env-vars DB_PASS="..." \
