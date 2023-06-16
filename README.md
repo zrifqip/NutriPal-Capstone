@@ -42,9 +42,9 @@ chmod u+x deploy.sh
 ```
 
 ## Credit
-Andi Sekar Ayu Fadilla (M151DSY0570, Bangkit Academy 2023)
-Astried Sulastri Madinah (M297DSY0473, Bangkit Academy 2023)
-Ufi Nihayatal Izza Sarinop (c017dsy2780, Bangkit Academy 2023)
+1. Andi Sekar Ayu Fadilla (M151DSY0570, Bangkit Academy 2023)
+2. Astried Sulastri Madinah (M297DSY0473, Bangkit Academy 2023)
+3. Ufi Nihayatal Izza Sarinop (c017dsy2780, Bangkit Academy 2023)
 
 ## Documentation
  For more details on the available routes and their request/response format, click [Here](https://tinyurl.com/nutripalFoodMLAPI)
