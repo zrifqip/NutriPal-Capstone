@@ -16,7 +16,7 @@ def make_request(url, method, headers, body):
 @app.route('/api/predict/<idHasilSurvey>',methods=['POST'])
 def predict(idHasilSurvey):
     token = request.headers.get('Authorization')
-    body = request.get_json(force=True)
+    body = request.get_json()
 
     if token and 'calorie' in body:
         daily_calorie = body['calorie']
