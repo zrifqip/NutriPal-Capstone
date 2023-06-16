@@ -1,4 +1,4 @@
-# NutriPal-Capstone Authentication API
+# NutriPal-Capstone Survey API
 
 ## Description
 This API is a RESTful API developed using Express JS and deployed on [Google Cloud Run](https://cloud.google.com/run). It is designed to perform database operations (Create, Read, Update) based on user survey data . It accepts HTTP request body in either JSON format or encoded URLs.
@@ -6,7 +6,7 @@ This API is a RESTful API developed using Express JS and deployed on [Google Clo
 ## How to Install and Run The Project Locally
 1. Clone this branch 
 ```git 
-git clone -b api https://github.com/zrifqip/NutriPal-Capstone.git
+git clone -b survey-api https://github.com/zrifqip/NutriPal-Capstone.git
 ```
 2. Install dependencies (you can see list of dependencies used in package.json)
 ```node
