@@ -18,8 +18,10 @@ def generate_meal_recommendation(total_calories):
     dinner_candidates = X[(X['calories'] <= dinner_calories)]
     dinner_predictions = dinner_classifier.predict(dinner_candidates)
 
-    breakfast_recommendation = random.sample(list(breakfast_candidates.index[breakfast_predictions == 1]), min(3, len(breakfast_candidates)))
-    lunch_recommendation = random.sample(list(lunch_candidates.index[lunch_predictions == 1]), min(3, len(lunch_candidates)))
-    dinner_recommendation = random.sample(list(dinner_candidates.index[dinner_predictions == 1]), min(3, len(dinner_candidates)))
+    n = 5
+
+    breakfast_recommendation = random.sample(list(breakfast_candidates.index[breakfast_predictions == 1]), min(n, len(breakfast_candidates)))
+    lunch_recommendation = random.sample(list(lunch_candidates.index[lunch_predictions == 1]), min(n, len(lunch_candidates)))
+    dinner_recommendation = random.sample(list(dinner_candidates.index[dinner_predictions == 1]), min(n, len(dinner_candidates)))
     
     return breakfast_recommendation, lunch_recommendation, dinner_recommendation
