@@ -1,7 +1,7 @@
 List of Datasets :
 
 - Obesity Level
-  - Description  : Obesity based on eating habits AND physical condition.
+  - Description  : Obesity based on eating habits and physical condition.
   - Source       : Kaggle
   - Link         : https://www.kaggle.com/datasets/ankurbajaj9/obesity-levels
 
