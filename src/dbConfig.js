@@ -9,5 +9,5 @@ const db = mysql.createConnection({
     acquireTimeout: 30000, // Set the timeout value for acquiring a connection (in milliseconds)
     timeout: 60000
   });
- 
+
 module.exports = db;
