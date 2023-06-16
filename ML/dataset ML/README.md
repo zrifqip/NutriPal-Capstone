@@ -1,11 +1,11 @@
 List of Datasets :
 
-1. Obesity Level
-   Description  : Obesity based on eating habits AND physical condition.
-   Source       : Kaggle
-   Link         : https://www.kaggle.com/datasets/ankurbajaj9/obesity-levels
+- Obesity Level
+> Description  : Obesity based on eating habits AND physical condition.
+> Source       : Kaggle
+> Link         : https://www.kaggle.com/datasets/ankurbajaj9/obesity-levels
 
-2. Food
-   Description  : Food calorie list
-   Source       : Repository UNISSULA
-   Link         : http://repository.unissula.ac.id/18072/8/Lampiran.pdf
+- Food
+> Description  : Food calorie list
+> Source       : Repository UNISSULA
+> Link         : http://repository.unissula.ac.id/18072/8/Lampiran.pdf
