@@ -8,7 +8,7 @@ gcloud run deploy nutripal-survey-api \
   --allow-unauthenticated \
   --max-instances=1 \
   --add-cloudsql-instances INSTANCE_CONNECTION_NAME \
-  --set-env-vars INSTANCE_UNIX_SOCKET="/cloudsql/..." \
+  --set-env-vars INSTANCE_UNIX_SOCKET="..." \
   --set-env-vars INSTANCE_CONNECTION_NAME="..." \
   --set-env-vars DB_NAME="..." \
   --set-env-vars DB_USER="..." \
